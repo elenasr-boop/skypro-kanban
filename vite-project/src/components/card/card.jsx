@@ -1,4 +1,12 @@
-const Card = ({ category, description, date, bgcolor }) => {
+const Card = ({ category, description, date, key }) => {
+  let bgcolor = "";
+  switch (category) {
+    case "Web design": bgcolor = "_orange"; break;
+    case "Research": bgcolor = "_green"; break;
+    case "Copywriting": bgcolor = "_purple"; break;
+    default: bgcolor = ""; break;
+  }
+
   let str = "card__theme " + bgcolor;
   return (
     <div className="cards__item">

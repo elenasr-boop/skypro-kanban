@@ -1,99 +1,8 @@
+import { cardList } from "../../data";
 import Card from "../card/card";
 
 const Column = () => {
-  const arr = [
-    {
-      text: "Без статуса",
-      cards: [
-        {
-          category: "Web Design",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_orange",
-        },
-        {
-          category: "Research",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_green",
-        },
-        {
-          category: "Web Design",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_orange",
-        },
-        {
-          category: "Copywriting",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_purple",
-        },
-        {
-          category: "Web Design",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_orange",
-        },
-      ],
-    },
-    {
-      text: "Нужно сделать",
-      cards: [
-        {
-          category: "Research",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_green",
-        },
-      ],
-    },
-    {
-      text: "В работе",
-      cards: [
-        {
-          category: "Research",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_green",
-        },
-        {
-          category: "Copywriting",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_purple",
-        },
-        {
-          category: "Web Design",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_orange",
-        },
-      ],
-    },
-    {
-      text: "Тестирование",
-      cards: [
-        {
-          category: "Research",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_green",
-        },
-      ],
-    },
-    {
-      text: "Готово",
-      cards: [
-        {
-          category: "Research",
-          description: "Название задачи",
-          date: "30.10.23",
-          color: "_green",
-        },
-      ],
-    },
-  ];
+  const arr = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];
 
   return (
     <>
@@ -103,14 +12,17 @@ const Column = () => {
               <p>{el.text}</p>
             </div>
             <div className="cards">
-              {el.cards.map((cardEl, key) => (
-                  <Card
-                    category={cardEl.category}
-                    description={cardEl.description}
-                    date={cardEl.date}
-                    bgcolor={cardEl.color}
-                  ></Card>
-                ))}
+              {cardList.map((cardEl) => {
+                if (cardEl.status === el) {
+                  return (<Card
+                  category={cardEl.theme}
+                  description={cardEl.title}
+                  date={cardEl.date}
+                  key={cardEl.id}
+                ></Card>)
+                }
+              }
+                )}
             </div>
           </div>
         )
