@@ -7,18 +7,18 @@ const Column = () => {
   return (
     <>
       {arr.map((el, index) => (
-          <div className="main__column column">
+          <div className="main__column column" key={index}>
             <div className="column__title">
               <p>{el.text}</p>
             </div>
             <div className="cards">
-              {cardList.map((cardEl) => {
+              {cardList.map((cardEl, index) => {
                 if (cardEl.status === el) {
                   return (<Card
                   category={cardEl.theme}
                   description={cardEl.title}
                   date={cardEl.date}
-                  key={cardEl.id}
+                  key={index}
                 ></Card>)
                 }
               }

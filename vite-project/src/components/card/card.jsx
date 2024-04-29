@@ -1,4 +1,4 @@
-const Card = ({ category, description, date, key }) => {
+const Card = ({ category, description, date }) => {
   let bgcolor = "";
   switch (category) {
     case "Web design": bgcolor = "_orange"; break;
