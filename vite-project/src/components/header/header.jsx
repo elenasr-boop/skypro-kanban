@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Header = () => {
+const Header = ( {onCardAdd}) => {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const toggleDropdown = () => setIsUserOpen((prevState) => !prevState);
 
@@ -19,8 +19,8 @@ const Header = () => {
             </a>
           </div>
           <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
+            <button className="header__btn-main-new _hover01" id="btnMainNew" onClick={onCardAdd}>
+              <a href="#">Создать новую задачу</a>
             </button>
             <a href="#user-set-target" className="header__user _hover02" onClick={toggleDropdown}>
               Ivan Ivanov

@@ -1,7 +1,6 @@
-import { cardList } from "../../data";
 import Card from "../card/card";
 
-const Column = () => {
+const Column = ({cardList}) => {
   const arr = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];
 
   return (
@@ -18,7 +17,7 @@ const Column = () => {
                   category={cardEl.theme}
                   description={cardEl.title}
                   date={cardEl.date}
-                  key={index}
+                  key={cardEl.id}
                 ></Card>)
                 }
               }
