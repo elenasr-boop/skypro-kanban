@@ -4,11 +4,12 @@ import PopBrowse from "./components/popUps/popBrowse/popBrowse";
 import PopNewCard from "./components/popUps/popNewCards/popNewCards";
 import PopUser from "./components/popUps/popUser/popUser";
 import Main from "./components/main/main";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cardList } from "./data";
 
 function App() {
   const [cards, setCards] = useState(cardList);
+  const [isLoading, setIsLoading] = useState(true);
 
   function onAddCard() {
     console.log("Добавляется задача");
@@ -24,6 +25,12 @@ function App() {
     setCards([...cards, newCard]);
   }
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <div className="wrapper">
       <PopUser></PopUser>
@@ -33,7 +40,7 @@ function App() {
       <PopBrowse></PopBrowse>
 
       <Header onCardAdd={onAddCard} />
-      <Main cardList={cards}/>
+      {isLoading ? <div>Данные загружаются</div>: <Main cardList={cards}/>}
     </div>
   );
 }
