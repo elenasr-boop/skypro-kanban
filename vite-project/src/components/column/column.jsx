@@ -1,4 +1,5 @@
 import Card from "../card/card";
+import { CardsStyled, ColumnTitle, ColumnTitleP, MainColumn } from "../column/column.styled.js";
 
 const Column = ({cardList}) => {
   const arr = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];
@@ -6,11 +7,11 @@ const Column = ({cardList}) => {
   return (
     <>
       {arr.map((el, index) => (
-          <div className="main__column column" key={index}>
-            <div className="column__title">
-              <p>{el.text}</p>
-            </div>
-            <div className="cards">
+          <MainColumn key={index}>
+            <ColumnTitle>
+              <ColumnTitleP>{el}</ColumnTitleP>
+            </ColumnTitle>
+            <CardsStyled>
               {cardList.map((cardEl, index) => {
                 if (cardEl.status === el) {
                   return (<Card
@@ -22,8 +23,8 @@ const Column = ({cardList}) => {
                 }
               }
                 )}
-            </div>
-          </div>
+            </CardsStyled>
+          </MainColumn>
         )
       
 	  )}
