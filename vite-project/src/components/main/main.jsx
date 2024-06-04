@@ -1,16 +1,17 @@
 import Column from "../column/column";
+import * as S from "./main.styled.js"
 
 const Main = ({cardList}) => {
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
+    <S.Main>
+      <S.Container>
+        <S.MainBlock>
+          <S.MainContent>
             <Column cardList={cardList}></Column>
-          </div>
-        </div>
-      </div>
-    </main>
+          </S.MainContent>
+        </S.MainBlock>
+      </S.Container>
+    </S.Main>
   );
 };
 
