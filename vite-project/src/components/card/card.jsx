@@ -9,14 +9,13 @@ const Card = ({ category, description, date }) => {
     default: bgcolor = ""; break;
   }
 
-  let str = bgcolor;
   return (
     <S.CardsItem>
       <S.CardsCard className=" card">
         <S.CardGroup>
-          <S.CardTheme className={str}>
-            <S.CardThemeP className={bgcolor}> {category} </S.CardThemeP>
-          </S.CardTheme>
+          <S.CardTopic $topicColor={bgcolor}>
+            <S.TopicText> {category} </S.TopicText>
+          </S.CardTopic>
           <a href="#popBrowse" target="_self">
             <S.CardBtn>
               <S.CardBtnDiv></S.CardBtnDiv>
