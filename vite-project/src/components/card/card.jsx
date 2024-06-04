@@ -1,3 +1,5 @@
+import * as S from "./card.styled.js";
+
 const Card = ({ category, description, date }) => {
   let bgcolor = "";
   switch (category) {
@@ -7,28 +9,28 @@ const Card = ({ category, description, date }) => {
     default: bgcolor = ""; break;
   }
 
-  let str = "card__theme " + bgcolor;
+  let str = bgcolor;
   return (
-    <div className="cards__item">
-      <div className="cards__card card">
-        <div className="card__group">
-          <div className={str}>
-            <p className={bgcolor}> {category} </p>
-          </div>
+    <S.CardsItem>
+      <S.CardsCard className=" card">
+        <S.CardGroup>
+          <S.CardTheme className={str}>
+            <S.CardThemeP className={bgcolor}> {category} </S.CardThemeP>
+          </S.CardTheme>
           <a href="#popBrowse" target="_self">
-            <div className="card__btn">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+            <S.CardBtn>
+              <S.CardBtnDiv></S.CardBtnDiv>
+              <S.CardBtnDiv></S.CardBtnDiv>
+              <S.CardBtnDiv></S.CardBtnDiv>
+            </S.CardBtn>
           </a>
-        </div>
-        <div className="card__content">
+        </S.CardGroup>
+        <S.CardContent>
           <a href="" target="_blank">
-            <h3 className="card__title">{description}</h3>
+            <S.CardTitle>{description}</S.CardTitle>
           </a>
-          <div className="card__date">
-            <svg
+          <S.CardDate className="card__date">
+            <S.CardDateSvg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
               height="13"
@@ -55,12 +57,12 @@ const Card = ({ category, description, date }) => {
                   <rect width="13" height="13" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
-            <p>{date}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            </S.CardDateSvg>
+            <S.CardDateP>{date}</S.CardDateP>
+          </S.CardDate>
+        </S.CardContent>
+      </S.CardsCard>
+    </S.CardsItem>
   );
 };
 
