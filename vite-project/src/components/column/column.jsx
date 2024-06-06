@@ -12,7 +12,7 @@ const Column = ({cardList}) => {
               <ColumnTitleP>{el}</ColumnTitleP>
             </ColumnTitle>
             <CardsStyled>
-              {cardList.map((cardEl, index) => {
+              {cardList.map((cardEl) => {
                 if (cardEl.status === el) {
                   return (<Card
                   category={cardEl.theme}
