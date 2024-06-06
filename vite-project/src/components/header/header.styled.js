@@ -42,6 +42,10 @@ export const HeaderBtnMainNew = styled.button`
   font-weight: 500;
   margin-right: 20px;
 
+  &:hover {
+    background-color: #33399b;
+  }
+
   @media (max-width: 495px) {
     z-index: 3;
     position: fixed;
@@ -106,4 +110,8 @@ export const HeaderPopUserSet = styled.div`
   padding: 34px;
   text-align: center;
   z-index: 2;
+
+  &:target {
+    display: block;
+  }
 `
