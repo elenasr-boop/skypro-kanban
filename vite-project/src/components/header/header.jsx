@@ -13,12 +13,12 @@ const Header = ( {onCardAdd}) => {
         <S.HeaderBlock>
           <div className=" _show _light">
             <a href="" target="_self">
-              <S.HeaderLogo src="../../public/logo.png" alt="logo" />
+              <S.HeaderLogo src="../../logo.png" alt="logo" />
             </a>
           </div>
           <div className=" _dark">
             <a href="" target="_self">
-              <S.HeaderLogo src="../../public/logo_dark.png" alt="logo" />
+              <S.HeaderLogo src="../../logo_dark.png" alt="logo" />
             </a>
           </div>
           <S.HeaderNav>

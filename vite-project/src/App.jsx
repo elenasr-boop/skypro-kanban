@@ -7,9 +7,7 @@ import Main from "./components/main/main";
 import { useEffect, useState } from "react";
 import { cardList } from "./data";
 import { Wrapper } from "./components/main/main.styled.js";
-import { createGlobalStyle } from "styled-components";
-
-createGlobalStyle;
+import { GlobalStyle } from "./global.styled.js";
 
 function App() {
   const [cards, setCards] = useState(cardList);
@@ -25,7 +23,7 @@ function App() {
       date: "30.10.23",
       status: "Без статуса",
     };
-    
+
     setCards([...cards, newCard]);
   }
 
@@ -36,16 +34,20 @@ function App() {
   }, []);
 
   return (
-    <Wrapper>
-      <PopUser></PopUser>
+    <>
+      <GlobalStyle />
 
-      <PopNewCard></PopNewCard>
+      <Wrapper>
+        <PopUser></PopUser>
 
-      <PopBrowse></PopBrowse>
+        <PopNewCard></PopNewCard>
 
-      <Header onCardAdd={onAddCard} />
-      {isLoading ? <div>Данные загружаются</div>: <Main cardList={cards}/>}
-    </Wrapper>
+        <PopBrowse></PopBrowse>
+
+        <Header onCardAdd={onAddCard} />
+        {isLoading ? <div>Данные загружаются</div> : <Main cardList={cards} />}
+      </Wrapper>
+    </>
   );
 }
 
