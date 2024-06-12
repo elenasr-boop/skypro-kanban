@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const PopUser = () => {
   return (
     <div className="pop-exit" id="popExit">
@@ -11,14 +9,14 @@ const PopUser = () => {
           <form className="pop-exit__form" id="formExit" action="#">
             <div className="pop-exit__form-group">
               <button className="pop-exit__exit-yes _hover01" id="exitYes">
-                <Link to="/login">Да, выйти</Link>{" "}
+                <a href="modal/signin.html">Да, выйти</a>{" "}
               </button>
               <button className="pop-exit__exit-no _hover03" id="exitNo">
-                <Link to="/">Нет, остаться</Link>{" "}
+                <a href="main.html">Нет, остаться</a>{" "}
               </button>
             </div>
           </form>
-        </div>
+          </div>
       </div>
     </div>
   );
