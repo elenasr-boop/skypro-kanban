@@ -6,6 +6,8 @@ import PopUser from "./components/popUps/popUser/popUser";
 import Main from "./components/main/main";
 import { useEffect, useState } from "react";
 import { cardList } from "./data";
+import { Wrapper } from "./components/main/main.styled.js";
+import { GlobalStyle } from "./global.styled.js";
 
 function App() {
   const [cards, setCards] = useState(cardList);
@@ -21,7 +23,7 @@ function App() {
       date: "30.10.23",
       status: "Без статуса",
     };
-    
+
     setCards([...cards, newCard]);
   }
 
@@ -32,16 +34,20 @@ function App() {
   }, []);
 
   return (
-    <div className="wrapper">
-      <PopUser></PopUser>
+    <>
+      <GlobalStyle />
 
-      <PopNewCard></PopNewCard>
+      <Wrapper>
+        <PopUser></PopUser>
 
-      <PopBrowse></PopBrowse>
+        <PopNewCard></PopNewCard>
 
-      <Header onCardAdd={onAddCard} />
-      {isLoading ? <div>Данные загружаются</div>: <Main cardList={cards}/>}
-    </div>
+        <PopBrowse></PopBrowse>
+
+        <Header onCardAdd={onAddCard} />
+        {isLoading ? <div>Данные загружаются</div> : <Main cardList={cards} />}
+      </Wrapper>
+    </>
   );
 }
 
