@@ -1,7 +1,7 @@
 export function NotFoundPage () {
     return (
-        <div>
+        <h1>
             This page is not found :(
-        </div>
+        </h1>
     )
 }
