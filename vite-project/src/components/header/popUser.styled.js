@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const UserSetName = styled.p`
@@ -73,6 +74,6 @@ export const ExitButton = styled.button`
   };
 `;
 
-export const ExitButtonA = styled.a`
+export const ExitButtonA = styled(Link)`
   color: #565eef;
 `;

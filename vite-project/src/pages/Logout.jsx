@@ -1,9 +1,5 @@
-import { PopUser } from "../components/popUps/popUser/popUser.jsx"
+import PopUser from "../components/popUps/popUser/popUser";
 
-export function Logout () {
-    return (
-        <div>
-            Logout page
-        </div>
-    )
+export function Exit () {
+    return (<PopUser/>)
 }

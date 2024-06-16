@@ -38,7 +38,7 @@ const Header = ( {onCardAdd}) => {
                 <SetThemeInput type="checkbox" name="checkbox" />
               </SetTheme>
               <ExitButton type="button">
-                <ExitButtonA href="#popExit">Выйти</ExitButtonA>
+                <ExitButtonA to="/exit">Выйти</ExitButtonA>
               </ExitButton>
             </S.HeaderPopUserSet>)}
           </S.HeaderNav>
