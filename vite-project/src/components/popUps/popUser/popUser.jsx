@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { PopExit } from "./popUser.styled";
 
 const PopUser = () => {
   return (
-    <div className="pop-exit">
+    <PopExit>
       <div className="pop-exit__container">
         <div className="pop-exit__block">
           <div className="pop-exit__ttl">
@@ -20,7 +21,7 @@ const PopUser = () => {
           </form>
           </div>
       </div>
-    </div>
+    </PopExit>
   );
 };
 
