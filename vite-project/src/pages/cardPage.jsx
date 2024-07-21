@@ -1,7 +1,10 @@
+import { useParams } from "react-router-dom"
+import PopBrowse from "../components/popUps/popBrowse/popBrowse.jsx"
+
 export function CardId () {
+    let {id}=useParams();
+
     return (
-        <div>
-            Card Id
-        </div>
+        <PopBrowse id={id} />
     )
 }

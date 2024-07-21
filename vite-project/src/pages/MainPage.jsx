@@ -1,19 +1,10 @@
 import Header from "../components/header/header";
-import PopBrowse from "../components/popUps/popBrowse/popBrowse";
-import PopNewCard from "../components/popUps/popNewCards/popNewCards";
-import PopUser from "../components/popUps/popUser/popUser";
 import Main from "../components/main/main";
 import { useEffect, useState } from "react";
 import { cardList } from "../data";
 import { Wrapper } from "../components/main/main.styled.js";
 import { GlobalStyle } from "../global.styled.js";
 import { Outlet } from "react-router-dom";
-
-export function Layout () {
-  return (
-    <Outlet />
-  )
-}
 
 export function MainPage() {
   const [cards, setCards] = useState(cardList);
@@ -44,12 +35,6 @@ export function MainPage() {
       <GlobalStyle />
 
       <Wrapper>
-        <PopUser></PopUser>
-
-        <PopNewCard></PopNewCard>
-
-        <PopBrowse></PopBrowse>
-
         <Header onCardAdd={onAddCard} />
 
         {isLoading ? <div>Данные загружаются</div> : <Main cardList={cards} />}
