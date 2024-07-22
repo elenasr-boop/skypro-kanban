@@ -17,7 +17,7 @@ const Card = ({ category, description, date, id }) => {
           <S.CardTopic $topicColor={bgcolor}>
             <S.TopicText> {category} </S.TopicText>
           </S.CardTopic>
-          <Link to={`part/${id}`} target="_self">
+          <Link to={`card/${id}`} target="_self">
             <S.CardBtn>
               <S.CardBtnDiv></S.CardBtnDiv>
               <S.CardBtnDiv></S.CardBtnDiv>
@@ -26,7 +26,7 @@ const Card = ({ category, description, date, id }) => {
           </Link>
         </S.CardGroup>
         <S.CardContent>
-          <Link to={`part/${id}`} >
+          <Link to={`card/${id}`} >
             <S.CardTitle>{description}</S.CardTitle>
           </Link>
           <S.CardDate className="card__date">

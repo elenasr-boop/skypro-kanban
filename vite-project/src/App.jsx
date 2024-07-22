@@ -6,15 +6,25 @@ import { Login } from "./pages/Login";
 import { Exit } from "./pages/Logout";
 import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
+import PrivateRoute from "./components/privateRoute";
+import { useState } from "react";
 
 function App() {
+  let [isAuth, setIsAuth] = useState(true);
+
+  function changeAuth () {
+    setIsAuth(!isAuth);
+  }
+
   return (
       <Routes>
+        <Route element={<PrivateRoute isAuth={isAuth}/>}>
         <Route path="/" element={<MainPage />}>
-          <Route path="part/:id" element={<CardId />} />
-          <Route path="exit" element={<Exit />} />
+          <Route path="card/:id" element={<CardId />} />
+          <Route path="exit" element={<Exit exitFunc={changeAuth}/>} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        </Route>
+        <Route path="/login" element={<Login isAuth={isAuth}/>} />
         <Route path="/registration" element={<Registration />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -1,7 +1,7 @@
-export function Login () {
+export function Login ( {isAuth} ) {
     return (
         <div>
-            Login page
+            Login page, {isAuth}
         </div>
     )
 }
