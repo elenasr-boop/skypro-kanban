@@ -1,7 +1,7 @@
+import { Authorization } from "../components/authorization/authorization"
+
 export function Login ( {isAuth} ) {
     return (
-        <div>
-            Login page, {isAuth}
-        </div>
+        <Authorization />
     )
 }
