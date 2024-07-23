@@ -1,7 +1,7 @@
 import { Register } from "../components/registration/registration"
 
-export function Registration () {
+export function Registration ( {loginFunc} ) {
     return (
-        <Register />
+        <Register loginFunc={loginFunc} />
     )
 }

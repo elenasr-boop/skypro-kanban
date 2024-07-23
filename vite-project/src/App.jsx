@@ -24,8 +24,8 @@ function App() {
           <Route path="exit" element={<Exit exitFunc={changeAuth}/>} />
         </Route>
         </Route>
-        <Route path="/login" element={<Login isAuth={isAuth}/>} />
-        <Route path="/registration" element={<Registration />} />
+        <Route path="/login" element={<Login isAuth={isAuth} loginFunc={changeAuth}/>} />
+        <Route path="/registration" element={<Registration loginFunc={changeAuth}/>} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
   );

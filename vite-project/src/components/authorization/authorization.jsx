@@ -10,7 +10,7 @@ import {
   RegisterText,
 } from "./authorization.styled";
 
-export function Authorization() {
+export function Authorization({ loginFunc }) {
   return (
     <LoginBlock>
       <MainBlock>
@@ -20,8 +20,19 @@ export function Authorization() {
             <LoginInput placeholder="Эл. почта" />
             <LoginInput placeholder="Пароль" />
           </LoginInputs>
-          <LoginButton>Войти</LoginButton>
-          <RegisterText>Нужно зарегистрироваться? <RegisterLink to="/registration">Регистрируйтесь здесь</RegisterLink></RegisterText>
+          <LoginButton
+            onClick={() => {
+              loginFunc();
+            }}
+          >
+            Войти
+          </LoginButton>
+          <RegisterText>
+            Нужно зарегистрироваться?{" "}
+            <RegisterLink to="/registration">
+              Регистрируйтесь здесь
+            </RegisterLink>
+          </RegisterText>
         </InnerBlock>
       </MainBlock>
     </LoginBlock>

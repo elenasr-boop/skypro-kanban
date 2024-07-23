@@ -1,7 +1,7 @@
 import { MainBlock } from "./registration.styled";
 import { Entrance, InnerBlock, LoginBlock, LoginButton, LoginInput, LoginInputs, RegisterLink, RegisterText } from "../authorization/authorization.styled";
 
-export function Register() {
+export function Register( {loginFunc} ) {
   return (
     <LoginBlock>
       <MainBlock>
@@ -12,7 +12,9 @@ export function Register() {
                 <LoginInput placeholder="Эл. почта" />
                 <LoginInput placeholder="Пароль" />
             </LoginInputs>
-            <LoginButton>Зарегистрироваться</LoginButton>
+            <LoginButton onClick={() => {
+                loginFunc();
+              }}>Зарегистрироваться</LoginButton>
             <RegisterText>Уже есть аккаунт? <RegisterLink to="/login">Войдите здесь</RegisterLink></RegisterText>
         </InnerBlock>
       </MainBlock>
