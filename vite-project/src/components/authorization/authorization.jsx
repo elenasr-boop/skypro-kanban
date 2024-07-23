@@ -17,8 +17,8 @@ export function Authorization() {
         <InnerBlock>
           <Entrance>Вход</Entrance>
           <LoginInputs>
-            <LoginInput placeholder="Эл. почта"></LoginInput>
-            <LoginInput placeholder="Пароль"></LoginInput>
+            <LoginInput placeholder="Эл. почта" />
+            <LoginInput placeholder="Пароль" />
           </LoginInputs>
           <LoginButton>Войти</LoginButton>
           <RegisterText>Нужно зарегистрироваться? <RegisterLink to="/registration">Регистрируйтесь здесь</RegisterLink></RegisterText>

@@ -63,7 +63,7 @@ export const LoginInput = styled.input`
 
 export const LoginButton = styled.button`
   width: 248px;
-  height: 30px;
+  height: 38px;
   padding: 8px 10px 8px 10px;
   border: none;
   color: rgba(255, 255, 255, 1);
