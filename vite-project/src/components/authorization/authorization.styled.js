@@ -75,6 +75,15 @@ export const LoginButton = styled.button`
   line-height: 21px;
   letter-spacing: -0.01em;
   text-align: center;
+  
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ButtonLink = styled(Link)`
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
 `;
 
 export const RegisterText = styled.p`

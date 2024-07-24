@@ -1,4 +1,5 @@
 import {
+  ButtonLink,
   Entrance,
   InnerBlock,
   LoginBlock,
@@ -20,13 +21,15 @@ export function Authorization({ loginFunc }) {
             <LoginInput placeholder="Эл. почта" />
             <LoginInput placeholder="Пароль" />
           </LoginInputs>
-          <LoginButton
-            onClick={() => {
-              loginFunc();
-            }}
-          >
-            Войти
-          </LoginButton>
+          <ButtonLink to="/">
+            <LoginButton
+              onClick={() => {
+                loginFunc();
+              }}
+            >
+              Войти
+            </LoginButton>
+          </ButtonLink>
           <RegisterText>
             Нужно зарегистрироваться?{" "}
             <RegisterLink to="/registration">
