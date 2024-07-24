@@ -97,7 +97,6 @@ export const HeaderUser = styled.a`
 `;
 
 export const HeaderPopUserSet = styled.div`
-  display: none;
   position: absolute;
   top: 61px;
   right: 0;

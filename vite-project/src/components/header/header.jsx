@@ -25,12 +25,10 @@ const Header = ( {onCardAdd}) => {
             <S.HeaderBtnMainNew id="btnMainNew" onClick={onCardAdd}>
               <S.HeaderBtnMainNewA href="#">Создать новую задачу</S.HeaderBtnMainNewA>
             </S.HeaderBtnMainNew>
-            <S.HeaderUser href="#user-set-target" onClick={toggleDropdown}>
+            <S.HeaderUser onClick={toggleDropdown}>
               Ivan Ivanov
             </S.HeaderUser>
-            {isUserOpen && (<S.HeaderPopUserSet
-              id="user-set-target"
-            >
+            {isUserOpen && (<S.HeaderPopUserSet>
               <UserSetName>Ivan Ivanov</UserSetName>
               <UserSetMail>ivan.ivanov@gmail.com</UserSetMail>
               <SetTheme>
