@@ -18,6 +18,7 @@ const Column = ({cardList}) => {
                   category={cardEl.theme}
                   description={cardEl.title}
                   date={cardEl.date}
+                  id={cardEl.id}
                   key={cardEl.id}
                 ></Card>)
                 }
@@ -26,8 +27,7 @@ const Column = ({cardList}) => {
             </CardsStyled>
           </MainColumn>
         )
-      
-	  )}
+      )}
     </>
   );
 };

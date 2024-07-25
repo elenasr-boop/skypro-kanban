@@ -1,53 +1,33 @@
 import "./App.css";
-import Header from "./components/header/header";
-import PopBrowse from "./components/popUps/popBrowse/popBrowse";
-import PopNewCard from "./components/popUps/popNewCards/popNewCards";
-import PopUser from "./components/popUps/popUser/popUser";
-import Main from "./components/main/main";
-import { useEffect, useState } from "react";
-import { cardList } from "./data";
-import { Wrapper } from "./components/main/main.styled.js";
-import { GlobalStyle } from "./global.styled.js";
+import { Route, Routes } from "react-router-dom";
+import { MainPage } from "./pages/MainPage";
+import { NotFoundPage } from "./pages/NotFound";
+import { Login } from "./pages/Login";
+import { Exit } from "./pages/Logout";
+import { Registration } from "./pages/registration";
+import { CardId } from "./pages/cardPage";
+import PrivateRoute from "./components/privateRoute";
+import { useState } from "react";
 
 function App() {
-  const [cards, setCards] = useState(cardList);
-  const [isLoading, setIsLoading] = useState(true);
+  let [isAuth, setIsAuth] = useState(true);
 
-  function onAddCard() {
-    console.log("Добавляется задача");
-
-    const newCard = {
-      id: cards.length + 1,
-      theme: "Web design",
-      title: "Название задачи",
-      date: "30.10.23",
-      status: "Без статуса",
-    };
-
-    setCards([...cards, newCard]);
+  function changeAuth () {
+    setIsAuth(!isAuth);
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
   return (
-    <>
-      <GlobalStyle />
-
-      <Wrapper>
-        <PopUser></PopUser>
-
-        <PopNewCard></PopNewCard>
-
-        <PopBrowse></PopBrowse>
-
-        <Header onCardAdd={onAddCard} />
-        {isLoading ? <div>Данные загружаются</div> : <Main cardList={cards} />}
-      </Wrapper>
-    </>
+      <Routes>
+        <Route element={<PrivateRoute isAuth={isAuth}/>}>
+        <Route path="/" element={<MainPage />}>
+          <Route path="card/:id" element={<CardId />} />
+          <Route path="exit" element={<Exit exitFunc={changeAuth}/>} />
+        </Route>
+        </Route>
+        <Route path="/login" element={<Login loginFunc={changeAuth}/>} />
+        <Route path="/registration" element={<Registration loginFunc={changeAuth}/>} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
   );
 }
 

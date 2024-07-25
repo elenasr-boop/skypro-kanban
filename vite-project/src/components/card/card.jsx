@@ -1,6 +1,7 @@
 import * as S from "./card.styled.js";
+import { Link } from "react-router-dom";
 
-const Card = ({ category, description, date }) => {
+const Card = ({ category, description, date, id }) => {
   let bgcolor = "";
   switch (category) {
     case "Web design": bgcolor = "_orange"; break;
@@ -16,18 +17,18 @@ const Card = ({ category, description, date }) => {
           <S.CardTopic $topicColor={bgcolor}>
             <S.TopicText> {category} </S.TopicText>
           </S.CardTopic>
-          <a href="#popBrowse" target="_self">
+          <Link to={`card/${id}`} target="_self">
             <S.CardBtn>
               <S.CardBtnDiv></S.CardBtnDiv>
               <S.CardBtnDiv></S.CardBtnDiv>
               <S.CardBtnDiv></S.CardBtnDiv>
             </S.CardBtn>
-          </a>
+          </Link>
         </S.CardGroup>
         <S.CardContent>
-          <a href="" target="_blank">
+          <Link to={`card/${id}`} >
             <S.CardTitle>{description}</S.CardTitle>
-          </a>
+          </Link>
           <S.CardDate className="card__date">
             <S.CardDateSvg
               xmlns="http://www.w3.org/2000/svg"
