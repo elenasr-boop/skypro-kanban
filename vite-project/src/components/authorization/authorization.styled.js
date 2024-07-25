@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 
 export const LoginBlock = styled.div`
   width: 100% - 16px;
-  height: 900px;
+  height: vh;
   background-color: rgba(234, 238, 246, 1);
   display: flex;
   justify-content: center;
   padding-top: 185px;
+  padding-bottom: 140px;
 `;
 
 export const MainBlock = styled.div`
   width: 368px;
-  height: 329px;
+  height: auto;
   background-color: rgba(255, 255, 255, 1);
   border: 0.7px rgba(212, 219, 229, 1);
   border-radius: 10px;
@@ -24,7 +25,7 @@ export const MainBlock = styled.div`
 
 export const InnerBlock = styled.div`
   width: 248px;
-  height: 229px;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -51,7 +52,8 @@ export const LoginInput = styled.input`
   max-height: 30px;
   padding: 8px 10px 8px 10px;
   border-radius: 8px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid;
+  border-color: ${props => props.$isError ? 'rgba(248, 77, 77, 1)' : 'rgba(148, 166, 190, 0.4)'};
   font-family: Roboto;
   font-size: 14px;
   font-weight: 400;
@@ -79,6 +81,14 @@ export const LoginButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+
+  &:disabled {
+    background-color: rgba(148, 166, 190, 1);
+  }
+
+  &:disabled:hover {
+    cursor: default;
+  }
 `;
 
 export const ButtonLink = styled(Link)`
@@ -104,4 +114,15 @@ export const RegisterLink = styled(Link)`
   letter-spacing: -0.01em;
   text-align: center;
   color: rgba(148, 166, 190, 0.4);
+`;
+
+export const ErrorMessage = styled.p`
+font-family: Arial;
+font-size: 12px;
+font-weight: 400;
+line-height: 18px;
+text-align: center;
+letter-spacing: -0.01em;
+text-align: center;
+color: rgba(248, 77, 77, 1);
 `;

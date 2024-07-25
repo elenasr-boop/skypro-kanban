@@ -8,9 +8,10 @@ import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
 import { useState } from "react";
+import { isAuthening } from "./api.js";
 
 function App() {
-  let [isAuth, setIsAuth] = useState(true);
+  let [isAuth, setIsAuth] = useState(isAuthening);
 
   function changeAuth () {
     setIsAuth(!isAuth);
