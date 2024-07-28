@@ -1,9 +1,10 @@
 import * as S from "./card.styled.js";
 import { Link } from "react-router-dom";
+import { lightFormat } from "date-fns";
 
-const Card = ({ category, description, date, id }) => {
+const Card = ({ card, id }) => {
   let bgcolor = "";
-  switch (category) {
+  switch (card.topic) {
     case "Web Design": bgcolor = "_orange"; break;
     case "Research": bgcolor = "_green"; break;
     case "Copywriting": bgcolor = "_purple"; break;
@@ -15,7 +16,7 @@ const Card = ({ category, description, date, id }) => {
       <S.CardsCard className=" card">
         <S.CardGroup>
           <S.CardTopic $topicColor={bgcolor}>
-            <S.TopicText> {category} </S.TopicText>
+            <S.TopicText> {card.topic} </S.TopicText>
           </S.CardTopic>
           <Link to={`card/${id}`} target="_self">
             <S.CardBtn>
@@ -26,8 +27,8 @@ const Card = ({ category, description, date, id }) => {
           </Link>
         </S.CardGroup>
         <S.CardContent>
-          <Link to={`card/${id}`} >
-            <S.CardTitle>{description}</S.CardTitle>
+          <Link to={`card/${id}`} card={card}>
+            <S.CardTitle>{card.title}</S.CardTitle>
           </Link>
           <S.CardDate className="card__date">
             <S.CardDateSvg
@@ -58,7 +59,7 @@ const Card = ({ category, description, date, id }) => {
                 </clipPath>
               </defs>
             </S.CardDateSvg>
-            <S.CardDateP>{date}</S.CardDateP>
+            <S.CardDateP>{lightFormat(card.date, 'dd-MM-yy')}</S.CardDateP>
           </S.CardDate>
         </S.CardContent>
       </S.CardsCard>

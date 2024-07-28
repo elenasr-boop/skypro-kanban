@@ -42,7 +42,7 @@ const PopNewCard = () => {
                 </div>
               </form>
 
-              <Calendar></Calendar>
+              <Calendar bool={true}></Calendar>
             </div>
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>

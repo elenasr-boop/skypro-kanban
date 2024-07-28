@@ -1,16 +1,21 @@
+import { lightFormat } from "date-fns";
 import Calendar from "../../calendar/calendar";
 import { Link } from "react-router-dom";
 
-const PopBrowse = ({ id }) => {
+const PopBrowse = ({ id, cards }) => {
+  const card = cards.filter((card) => {
+    return card._id === id;
+  })[0];
+
   return (
     <div className="pop-browse" id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
             <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">Название задачи {id}</h3>
+              <h3 className="pop-browse__ttl">{card.title}</h3>
               <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
+                <p className="_orange">{card.topic}</p>
               </div>
             </div>
             <div className="pop-browse__status status">
@@ -49,15 +54,15 @@ const PopBrowse = ({ id }) => {
                     id="textArea01"
                     readOnly
                     placeholder="Введите описание задачи..."
-                  ></textarea>
+                  >{card.description}</textarea>
                 </div>
               </form>
-              <Calendar></Calendar>
+              <Calendar bool={false} data={lightFormat(card.date, 'dd-MM-yy')}></Calendar>
             </div>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
               <div className="categories__theme _orange _active-category">
-                <p className="_orange">Web Design</p>
+                <p className="_orange">{card.topic}</p>
               </div>
             </div>
             <div className="pop-browse__btn-browse ">
