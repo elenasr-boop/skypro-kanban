@@ -26,13 +26,10 @@ export function MainPage() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
+    getTodos().then((data) => {
+      setCards(data.tasks);
       setIsLoading(false);
-    }, 2000);
-  }, []);
-
-  useEffect(() => {
-    getTodos().then((data) => setCards(data.tasks));
+    });
   }, [cards]);
 
   return (
