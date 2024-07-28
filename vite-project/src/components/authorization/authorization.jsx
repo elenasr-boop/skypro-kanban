@@ -1,5 +1,4 @@
 import {
-  ButtonLink,
   Entrance,
   ErrorMessage,
   InnerBlock,
@@ -35,9 +34,8 @@ export function Authorization({ loginFunc }) {
   };
 
   async function clickOnButton () {
-    
-
     const result = await auth ( {login: authData.login, password: authData.password} );
+    
     if (result === 201) {
       loginFunc();
       navigate("/");
