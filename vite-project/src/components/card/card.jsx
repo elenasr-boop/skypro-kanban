@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const Card = ({ category, description, date, id }) => {
   let bgcolor = "";
   switch (category) {
-    case "Web design": bgcolor = "_orange"; break;
+    case "Web Design": bgcolor = "_orange"; break;
     case "Research": bgcolor = "_green"; break;
     case "Copywriting": bgcolor = "_purple"; break;
-    default: bgcolor = ""; break;
+    default: bgcolor = "_gray"; break;
   }
 
   return (

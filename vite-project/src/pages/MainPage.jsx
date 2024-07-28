@@ -1,7 +1,7 @@
 import Header from "../components/header/header";
 import Main from "../components/main/main";
 import { useEffect, useState } from "react";
-import { cardList } from "../data";
+import { cardList, getTodos } from "../api.js";
 import { Wrapper } from "../components/main/main.styled.js";
 import { GlobalStyle } from "../global.styled.js";
 import { Outlet } from "react-router-dom";
@@ -30,6 +30,10 @@ export function MainPage() {
       setIsLoading(false);
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    getTodos().then((data) => setCards(data.tasks));
+  }, [cards]);
 
   return (
     <>
