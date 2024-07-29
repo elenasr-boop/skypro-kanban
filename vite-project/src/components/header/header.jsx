@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as S from "./header.styled.js";
 import { Container } from "../main/main.styled.js";
 import { ExitButton, ExitButtonA, SetTheme, SetThemeInput, SetThemeP, UserSetMail, UserSetName } from "./popUser.styled.js";
+import { userMail, userName } from "../../api.js";
 
 const Header = ( {onCardAdd}) => {
   const [isUserOpen, setIsUserOpen] = useState(false);
@@ -26,11 +27,11 @@ const Header = ( {onCardAdd}) => {
               <S.HeaderBtnMainNewA href="#">Создать новую задачу</S.HeaderBtnMainNewA>
             </S.HeaderBtnMainNew>
             <S.HeaderUser onClick={toggleDropdown}>
-              Ivan Ivanov
+              {userName}
             </S.HeaderUser>
             {isUserOpen && (<S.HeaderPopUserSet>
-              <UserSetName>Ivan Ivanov</UserSetName>
-              <UserSetMail>ivan.ivanov@gmail.com</UserSetMail>
+              <UserSetName>{userName}</UserSetName>
+              <UserSetMail>{userMail}</UserSetMail>
               <SetTheme>
                 <SetThemeP>Темная тема</SetThemeP>
                 <SetThemeInput type="checkbox" name="checkbox" />

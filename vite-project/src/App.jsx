@@ -8,19 +8,22 @@ import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
 import { useState } from "react";
+import { isAuthening } from "./api.js";
 
 function App() {
-  let [isAuth, setIsAuth] = useState(true);
+  let [isAuth, setIsAuth] = useState(isAuthening);
 
   function changeAuth () {
     setIsAuth(!isAuth);
   }
 
+  const [cards, setCards] = useState([]);
+
   return (
       <Routes>
         <Route element={<PrivateRoute isAuth={isAuth}/>}>
-        <Route path="/" element={<MainPage />}>
-          <Route path="card/:id" element={<CardId />} />
+        <Route path="/" element={<MainPage cards={cards} setCards={setCards}/>}>
+          <Route path="card/:id" element={<CardId cards={cards}/>} />
           <Route path="exit" element={<Exit exitFunc={changeAuth}/>} />
         </Route>
         </Route>

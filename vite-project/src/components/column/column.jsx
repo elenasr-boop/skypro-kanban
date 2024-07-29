@@ -15,11 +15,9 @@ const Column = ({cardList}) => {
               {cardList.map((cardEl) => {
                 if (cardEl.status === el) {
                   return (<Card
-                  category={cardEl.theme}
-                  description={cardEl.title}
-                  date={cardEl.date}
-                  id={cardEl.id}
-                  key={cardEl.id}
+                  card={cardEl}
+                  id={cardEl._id}
+                  key={cardEl._id}
                 ></Card>)
                 }
               }

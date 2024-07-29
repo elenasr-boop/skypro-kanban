@@ -1,19 +1,17 @@
 import Header from "../components/header/header";
 import Main from "../components/main/main";
 import { useEffect, useState } from "react";
-import { cardList } from "../data";
+import { getTodos } from "../api.js";
 import { Wrapper } from "../components/main/main.styled.js";
 import { GlobalStyle } from "../global.styled.js";
 import { Outlet } from "react-router-dom";
 import { Loading } from "../components/loading/loading.jsx";
 
-export function MainPage() {
-  const [cards, setCards] = useState(cardList);
+export function MainPage( {cards, setCards} ) {
+  
   const [isLoading, setIsLoading] = useState(true);
 
   function onAddCard() {
-    console.log("Добавляется задача");
-
     const newCard = {
       id: cards.length + 1,
       theme: "Web design",
@@ -26,10 +24,11 @@ export function MainPage() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
+    getTodos().then((data) => {
+      setCards(data.tasks);
       setIsLoading(false);
-    }, 2000);
-  }, []);
+    });
+  }, [cards, setCards]);
 
   return (
     <>

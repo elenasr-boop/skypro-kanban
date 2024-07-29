@@ -1,6 +1,6 @@
 import * as S from "./calendar.styled.js";
 
-const Calendar = () => {
+const Calendar = ( {bool, data} ) => {
   return (
     <S.Calendar>
       <S.CalendarTtl>Даты</S.CalendarTtl>
@@ -82,7 +82,7 @@ const Calendar = () => {
         <input type="hidden" id="datepick_value" value="08.09.2023" />
         <S.CalendarPeriod>
           <S.PeriodP>
-            Выберите срок исполнения <S.PeriodSpan></S.PeriodSpan>.
+            {bool ? "Выберите срок исполнения" : `Срок исполнения: ${data}`} <S.PeriodSpan></S.PeriodSpan>.
           </S.PeriodP>
         </S.CalendarPeriod>
       </S.CalendarBlock>
