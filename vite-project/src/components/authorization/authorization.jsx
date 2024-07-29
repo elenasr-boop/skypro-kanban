@@ -34,7 +34,10 @@ export function Authorization({ loginFunc }) {
   };
 
   async function clickOnButton () {
-    const result = await auth ( {login: authData.login, password: authData.password} );
+    if (authData.login === "" || authData.password === "") {
+      setIsError(true);
+    } else {
+      const result = await auth ( {login: authData.login, password: authData.password} );
     
     if (result === 201) {
       loginFunc();
@@ -42,6 +45,7 @@ export function Authorization({ loginFunc }) {
       setIsError(false);
     } else {
       setIsError(true);
+    }
     }
   }
 

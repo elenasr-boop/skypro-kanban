@@ -8,20 +8,20 @@ import {
   LoginInputs,
   RegisterLink,
   RegisterText,
-  ErrorMessage
+  ErrorMessage,
 } from "../authorization/authorization.styled";
 import { useState } from "react";
 import { register } from "../../api";
 import { useNavigate } from "react-router-dom";
 
 export function Register({ loginFunc }) {
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const [registerData, setRegisterData] = useState({
     login: "",
     name: "",
-    password: "", 
+    password: "",
   });
 
   const handleInputChange = (e) => {
@@ -31,19 +31,37 @@ export function Register({ loginFunc }) {
       ...registerData,
       [name]: value,
     });
-    setIsError(false);
+
+    setError("");
   };
 
-  async function clickOnButton () {
-    const result = await register ( {login: registerData.login, name: registerData.name, password: registerData.password} );
-
-    if (result === 201) {
-      loginFunc();
-      navigate("/");
-      setIsError(false);
+  async function clickOnButton() {
+    if (
+      registerData.login === "" ||
+      registerData.name === "" ||
+      registerData.password === ""
+    ) {
+      setError(
+        "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
+      );
     } else {
-      setIsError(true);
+      const result = await register({
+        login: registerData.login,
+        name: registerData.name,
+        password: registerData.password,
+      });
+
+      if (result === 201) {
+        loginFunc();
+        navigate("/");
+        setError("");
+      } else if (result === 400) {
+        setError(
+          "Вы ввели почту, которая уже использовалась для регистрации. Попробуйте другую почту."
+        );
+      }
     }
+    // setError("Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.");
   }
 
   return (
@@ -52,22 +70,42 @@ export function Register({ loginFunc }) {
         <InnerBlock>
           <Entrance>Регистрация</Entrance>
           <LoginInputs>
-            <LoginInput placeholder="Имя" value={registerData.name} onChange={handleInputChange} name="name" label="Имя" $isError={isError} />
-            <LoginInput placeholder="Эл. почта" value={registerData.login} onChange={handleInputChange} name="login" label="Логин" $isError={isError} type="email" />
-            <LoginInput placeholder="Пароль" onChange={handleInputChange} value={registerData.password} name="password" label="Пароль" type="password"  $isError={isError} />
+            <LoginInput
+              placeholder="Имя"
+              value={registerData.name}
+              onChange={handleInputChange}
+              name="name"
+              label="Имя"
+              $isError={error === "" ? false : true}
+            />
+            <LoginInput
+              placeholder="Эл. почта"
+              value={registerData.login}
+              onChange={handleInputChange}
+              name="login"
+              label="Логин"
+              $isError={error === "" ? false : true}
+              type="email"
+            />
+            <LoginInput
+              placeholder="Пароль"
+              onChange={handleInputChange}
+              value={registerData.password}
+              name="password"
+              label="Пароль"
+              type="password"
+              $isError={error === "" ? false : true}
+            />
           </LoginInputs>
-          { isError ? 
-            <ErrorMessage>
-              Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.
-            </ErrorMessage> : <></>}
-            <LoginButton
-              onClick={() => {
-                clickOnButton();
-              }}
-              disabled={isError}
-            >
-              Зарегистрироваться
-            </LoginButton>
+          {error !== "" ? <ErrorMessage>{error}</ErrorMessage> : <></>}
+          <LoginButton
+            onClick={() => {
+              clickOnButton();
+            }}
+            disabled={error === "" ? false : true}
+          >
+            Зарегистрироваться
+          </LoginButton>
           <RegisterText>
             Уже есть аккаунт?{" "}
             <RegisterLink to="/login">Войдите здесь</RegisterLink>
