@@ -1,7 +1,5 @@
 export let isAuthening = false;
-export let userName = "";
-export let userMail = "";
-export let token = "";
+export let token = localStorage.getItem("token");
 export let cardList = [];
 
 export async function auth ( {login, password} ) {
@@ -15,9 +13,8 @@ export async function auth ( {login, password} ) {
     const data = await response.json();
 
     if (response.status === 201) {
-        userName = data.user.name;
-        userMail = data.user.login;
-        token = data.user.token;
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.user.token);
     }
 
     return response.status;
@@ -36,9 +33,8 @@ export async function register ( {login, name, password}) {
     const data = await response.json();
 
     if (response.status === 201) {
-        userName = data.user.name;
-        userMail = data.user.login;
-        token = data.user.token;
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.user.token);
     }
 
     return response.status;

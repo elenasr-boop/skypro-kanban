@@ -11,18 +11,6 @@ export function MainPage( {cards, setCards} ) {
   
   const [isLoading, setIsLoading] = useState(true);
 
-  function onAddCard() {
-    const newCard = {
-      id: cards.length + 1,
-      theme: "Web design",
-      title: "Название задачи",
-      date: "30.10.23",
-      status: "Без статуса",
-    };
-
-    setCards([...cards, newCard]);
-  }
-
   useEffect(() => {
     getTodos().then((data) => {
       setCards(data.tasks);
@@ -35,7 +23,7 @@ export function MainPage( {cards, setCards} ) {
       <GlobalStyle />
 
       <Wrapper>
-        <Header onCardAdd={onAddCard} />
+        <Header />
 
         {isLoading ? <Loading /> : <Main cardList={cards} />}
 

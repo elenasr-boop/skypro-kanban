@@ -14,7 +14,7 @@ import { useState } from "react";
 import { auth } from "../../api";
 import { useNavigate } from "react-router-dom";
 
-export function Authorization({ loginFunc }) {
+export function Authorization() {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
@@ -40,7 +40,6 @@ export function Authorization({ loginFunc }) {
       const result = await auth ( {login: authData.login, password: authData.password} );
     
     if (result === 201) {
-      loginFunc();
       navigate("/");
       setIsError(false);
     } else {

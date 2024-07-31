@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function PrivateRoute({ isAuth }) {
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+export default function PrivateRoute() {
+  return localStorage.getItem("user") !== "null" ? <Outlet /> : <Navigate to="/login" />;
 }
