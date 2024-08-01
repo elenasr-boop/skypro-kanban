@@ -1,8 +1,13 @@
-import { lightFormat } from "date-fns";
-import Calendar from "../../calendar/calendar";
+// import { lightFormat } from "date-fns";
+// import Calendar from "../../calendar/calendar";
 import { Link } from "react-router-dom";
+import { StyledDayPicker } from "../popNewCards/popNewCards.styled";
+import { useState } from "react";
+import { ru } from "date-fns/locale";
 
 const PopBrowse = ({ id, cards }) => {
+  const [selected, setSelected] = useState(false);
+
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
@@ -57,7 +62,17 @@ const PopBrowse = ({ id, cards }) => {
                   >{card.description}</textarea>
                 </div>
               </form>
-              <Calendar bool={false} data={lightFormat(card.date, 'dd-MM-yy')}></Calendar>
+              <StyledDayPicker
+                mode="single"
+                selected={selected}
+                onSelect={setSelected}
+                locale={ru}
+                footer={
+                  selected
+                    ? `Срок исполнения: ${selected.toLocaleDateString()}`
+                    : "Выберите срок исполнения."
+                }
+              />
             </div>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
