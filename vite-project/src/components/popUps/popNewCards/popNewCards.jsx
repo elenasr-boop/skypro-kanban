@@ -48,14 +48,14 @@ const PopNewCard = () => {
             <S.Categories>
               <S.CategoriesP className="subttl">Категория</S.CategoriesP>
               <S.CategoriesThemes>
-                <S.CategoriesTheme className="_orange _active-category">
-                  <p className="_orange">Web Design</p>
+                <S.CategoriesTheme $color="_orange" className="_active-category">
+                  <S.CategoriesThemeP $color="_orange">Web Design</S.CategoriesThemeP>
                 </S.CategoriesTheme>
-                <S.CategoriesTheme className="_green">
-                  <p className="_green">Research</p>
+                <S.CategoriesTheme $color="_green">
+                  <S.CategoriesThemeP $color="_green">Research</S.CategoriesThemeP>
                 </S.CategoriesTheme>
-                <S.CategoriesTheme className="_purple">
-                  <p className="_purple">Copywriting</p>
+                <S.CategoriesTheme $color="_purple">
+                  <S.CategoriesThemeP $color="_purple">Copywriting</S.CategoriesThemeP>
                 </S.CategoriesTheme>
               </S.CategoriesThemes>
             </S.Categories>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { topicStyles } from "../../card/card.styled";
 
 export const PopNewCard = styled.div`
   width: 100%;
@@ -228,13 +229,14 @@ export const CategoriesTheme = styled.div`
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
+  background-color: ${({$color}) => topicStyles[$color]?.backgroundColor || "#06b16e" };
+`;
 
-  
-
-  p {
-    font-size: 14px;
+export const CategoriesThemeP = styled.p`
+  font-size: 14px;
   font-weight: 600;
   line-height: 14px;
   white-space: nowrap;
-  }
+
+  color: ${({$color}) => topicStyles[$color]?.color || "#06b16e" };
 `;
