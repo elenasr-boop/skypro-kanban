@@ -8,7 +8,7 @@ import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
 import { useState } from "react";
-import { UserContext } from "./context/userContext";
+import { UserContext } from "./userContext.jsx";
 import PopNewCard from "./components/popUps/popNewCards/popNewCards";
 
 function App() {
