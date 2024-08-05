@@ -116,7 +116,7 @@ const PopNewCard = ( {setCards} ) => {
                         changeTopic();
                       }}
                     />
-                    <S.Label htmlFor="Web design">
+                    <S.Label htmlFor="Web Design">
                       <S.CategoriesTheme $color="_orange">
                         <S.CategoriesThemeP $color="_orange">
                           Web Design

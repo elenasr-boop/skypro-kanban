@@ -74,3 +74,18 @@ export async function createTodo ( {title, topic, status, description, date, set
 
     return res;
 }
+
+export async function deleteTodo ( {id, setCards} ) {
+    const res = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
+
+    const data = await res.json();
+
+    setCards(data.tasks);
+    
+    return res;
+}

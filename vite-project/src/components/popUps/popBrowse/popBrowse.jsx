@@ -1,16 +1,27 @@
 // import { lightFormat } from "date-fns";
 // import Calendar from "../../calendar/calendar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StyledDayPicker } from "../popNewCards/popNewCards.styled";
 import { useState } from "react";
 import { ru } from "date-fns/locale";
+import { deleteTodo } from "../../../api";
 
-const PopBrowse = ({ id, cards }) => {
+const PopBrowse = ({ id, cards, setCards }) => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
 
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
+
+  async function onDeleteButton () {
+    const result = await deleteTodo ({id: id, setCards: setCards});
+
+    if (result.status === 201) {
+      console.log("Задача успешно удалена");
+      navigate("/");
+    }
+  }
 
   return (
     <div className="pop-browse" id="popBrowse">
@@ -58,8 +69,9 @@ const PopBrowse = ({ id, cards }) => {
                     name="text"
                     id="textArea01"
                     readOnly
+                    value={card.description}
                     placeholder="Введите описание задачи..."
-                  >{card.description}</textarea>
+                  />
                 </div>
               </form>
               <StyledDayPicker
@@ -67,11 +79,6 @@ const PopBrowse = ({ id, cards }) => {
                 selected={selected}
                 onSelect={setSelected}
                 locale={ru}
-                footer={
-                  selected
-                    ? `Срок исполнения: ${selected.toLocaleDateString()}`
-                    : "Выберите срок исполнения."
-                }
               />
             </div>
             <div className="theme-down__categories theme-down">
@@ -85,8 +92,8 @@ const PopBrowse = ({ id, cards }) => {
                 <button className="btn-browse__edit _btn-bor _hover03">
                   <a href="#">Редактировать задачу</a>
                 </button>
-                <button className="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
+                <button className="btn-browse__delete _btn-bor _hover03" onClick={() => onDeleteButton()}>
+                  <div>Удалить задачу</div>
                 </button>
               </div>
               <button className="btn-browse__close _btn-bg _hover01">
@@ -103,9 +110,9 @@ const PopBrowse = ({ id, cards }) => {
                 </button>
                 <button
                   className="btn-edit__delete _btn-bor _hover03"
-                  id="btnDelete"
+                  id="btnDelete" onClick={() => onDeleteButton()}
                 >
-                  <a href="#">Удалить задачу</a>
+                  <div>Удалить задачу</div>
                 </button>
               </div>
               <button className="btn-edit__close _btn-bg _hover01">
