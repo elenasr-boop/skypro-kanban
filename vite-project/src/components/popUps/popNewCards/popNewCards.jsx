@@ -8,6 +8,13 @@ const PopNewCard = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
 
+  function createTodo() {
+    console.log(
+      `Data: ${selected ? selected.toLocaleDateString() : new Date()}, `
+    );
+    // navigate("/");
+  }
+
   return (
     <S.PopNewCard>
       <S.PopNewCardContainer>
@@ -56,29 +63,63 @@ const PopNewCard = () => {
             <S.Categories>
               <S.CategoriesP className="subttl">Категория</S.CategoriesP>
               <S.CategoriesThemes>
-                <S.CategoriesTheme
-                  $color="_orange"
-                  className="_active-category"
+                <S.Fieldset
+                  onClick={() => {
+                    console.log("Выбрано");
+                  }}
                 >
-                  <S.CategoriesThemeP $color="_orange">
-                    Web Design
-                  </S.CategoriesThemeP>
-                </S.CategoriesTheme>
-                <S.CategoriesTheme $color="_green">
-                  <S.CategoriesThemeP $color="_green">
-                    Research
-                  </S.CategoriesThemeP>
-                </S.CategoriesTheme>
-                <S.CategoriesTheme $color="_purple">
-                  <S.CategoriesThemeP $color="_purple">
-                    Copywriting
-                  </S.CategoriesThemeP>
-                </S.CategoriesTheme>
+                  <>
+                    <S.Input
+                      type="radio"
+                      id="Web design"
+                      name="topic"
+                      value="Web design"
+                    />
+                    <S.Label htmlFor="Web design">
+                      <S.CategoriesTheme $color="_orange">
+                        <S.CategoriesThemeP $color="_orange">
+                          Web Design
+                        </S.CategoriesThemeP>
+                      </S.CategoriesTheme>
+                    </S.Label>
+                  </>
+
+                  <>
+                    <S.Input
+                      type="radio"
+                      id="Research"
+                      name="topic"
+                      value="Research"
+                    />
+                    <S.Label htmlFor="Research">
+                      <S.CategoriesTheme $color="_green">
+                        <S.CategoriesThemeP $color="_green">
+                          Research
+                        </S.CategoriesThemeP>
+                      </S.CategoriesTheme>
+                    </S.Label>
+                  </>
+                  <>
+                  <S.Input
+                      type="radio"
+                      id="Copywriting"
+                      name="topic"
+                      value="Copywriting"
+                    />
+                    <S.Label htmlFor="Copywriting">
+                    <S.CategoriesTheme $color="_purple">
+                      <S.CategoriesThemeP $color="_purple">
+                        Copywriting
+                      </S.CategoriesThemeP>
+                      </S.CategoriesTheme>
+                    </S.Label>
+                  </>
+                </S.Fieldset>
               </S.CategoriesThemes>
             </S.Categories>
             <S.FormCreate
               onClick={() => {
-                navigate("/");
+                createTodo();
               }}
             >
               Создать задачу

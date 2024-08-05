@@ -249,7 +249,6 @@ export const StyledDayPicker = styled(DayPicker)`
   color: rgba(148, 166, 190, 1);
   --rdp-day-height: 2rem;
   --rdp-day-width: 2rem;
-  
 
   .rdp-selected {
     background-color: rgba(148, 166, 190, 1);
@@ -272,6 +271,23 @@ export const StyledDayPicker = styled(DayPicker)`
   .rdp-day:hover {
     background-color: rgba(234, 238, 246, 1);
     border-radius: 18px;
-    ;
   }
+`;
+
+export const Fieldset = styled.fieldset`
+  border: none;
+  
+  input[type=radio]:checked + label {
+    div {
+      opacity: 1 !important;
+    }
+  }
+`;
+
+export const Input = styled.input`
+  /* display: none; */
+`;
+
+export const Label = styled.label`
+  cursor: pointer;
 `;
