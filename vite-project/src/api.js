@@ -52,3 +52,25 @@ export async function getTodos () {
 
     return data;
 }
+
+export async function createTodo ( {title, topic, status, description, date, setCards} ) {
+    const res = await fetch('https://wedev-api.sky.pro/api/kanban', {
+        method: 'POST', 
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            "title": title,
+            "topic": topic,
+            "status": status,
+            "description": description,
+            "date": date,
+        })
+    })
+
+    const data = await res.json();
+
+    setCards(data.tasks);
+
+    return res;
+}

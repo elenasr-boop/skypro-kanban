@@ -285,7 +285,7 @@ export const Fieldset = styled.fieldset`
 `;
 
 export const Input = styled.input`
-  /* display: none; */
+  display: none;
 `;
 
 export const Label = styled.label`

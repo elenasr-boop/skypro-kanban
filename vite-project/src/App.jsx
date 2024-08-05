@@ -36,7 +36,7 @@ function App() {
           >
             <Route path="card/:id" element={<CardId cards={cards} />} />
             <Route path="exit" element={<Exit exitFunc={exitFunc} />} />
-            <Route path="create" element={<PopNewCard/>} />
+            <Route path="create" element={<PopNewCard setCards={setCards} />} />
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
