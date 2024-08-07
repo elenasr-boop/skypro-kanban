@@ -1,5 +1,4 @@
 export let isAuthening = false;
-export let token = localStorage.getItem("token");
 export let cardList = [];
 
 export async function auth ( {login, password} ) {
@@ -12,12 +11,7 @@ export async function auth ( {login, password} ) {
     });
     const data = await response.json();
 
-    if (response.status === 201) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.user.token);
-    }
-
-    return response.status;
+    return data;
 }
 
 export async function register ( {login, name, password}) {
@@ -32,15 +26,10 @@ export async function register ( {login, name, password}) {
 
     const data = await response.json();
 
-    if (response.status === 201) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("token", data.user.token);
-    }
-
-    return response.status;
+    return data;
 }
 
-export async function getTodos () {
+export async function getTodos ( {token} ) {
     const response = await fetch('https://wedev-api.sky.pro/api/kanban', {
         method: 'GET',
         headers: {
@@ -53,7 +42,7 @@ export async function getTodos () {
     return data;
 }
 
-export async function createTodo ( {title, topic, status, description, date, setCards} ) {
+export async function createTodo ( {title, topic, status, description, date, token} ) {
     const res = await fetch('https://wedev-api.sky.pro/api/kanban', {
         method: 'POST', 
         headers: {
@@ -70,12 +59,10 @@ export async function createTodo ( {title, topic, status, description, date, set
 
     const data = await res.json();
 
-    setCards(data.tasks);
-
-    return res;
+    return data;
 }
 
-export async function deleteTodo ( {id, setCards} ) {
+export async function deleteTodo ( {id, token} ) {
     const res = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
         method: 'DELETE',
         headers: {
@@ -84,8 +71,6 @@ export async function deleteTodo ( {id, setCards} ) {
     });
 
     const data = await res.json();
-
-    setCards(data.tasks);
     
-    return res;
+    return data;
 }

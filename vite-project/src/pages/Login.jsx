@@ -1,7 +1,7 @@
 import { Authorization } from "../components/authorization/authorization.jsx"
 
-export function Login ( {loginFunc} ) {
+export function Login () {
     return (
-        <Authorization loginFunc={loginFunc}/>
+        <Authorization />
     )
 }

@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./popNewCards.styled.js";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "react-day-picker/style.css";
 import { ru } from "date-fns/locale/ru";
 import { createTodo } from "../../../api.js";
 import { parse } from "date-fns/parse";
+import { CardContext, UserContext } from "../../../context/userContext.jsx";
 
-const PopNewCard = ( {setCards} ) => {
+const PopNewCard = () => {
+  const { user } = useContext(UserContext);
+  const { setCards } = useContext(CardContext);
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
   const [topic, setTopic] = useState("Research");
@@ -20,25 +23,20 @@ const PopNewCard = ( {setCards} ) => {
       ? parse(selected.toLocaleDateString(), "dd.MM.yyyy", new Date())
       : new Date();
 
-    //     console.log(
-    //       `Data: ${data},
-    // Topic: ${topic},
-    // Title: ${todo.title},
-    // Description: ${todo.description}`
-    //     );
+    try {
+      const result = await createTodo({
+        title: todo.title,
+        topic: topic,
+        status: "Без статуса",
+        description: todo.description,
+        date: data,
+        token: user.token,
+      });
 
-    const result = await createTodo({
-      title: todo.title,
-      topic: topic,
-      status: "Без статуса",
-      description: todo.description,
-      date: data,
-      setCards: setCards,
-    });
-
-    if (result.status === 201) {
-      console.log("Успешно отправлена задача");
+      setCards(result.tasks);
       navigate("/");
+    } catch (_) {
+      console.log("Error");
     }
   }
 
@@ -90,17 +88,20 @@ const PopNewCard = ( {setCards} ) => {
                 </S.FormNewBlock>
               </S.PopNewCardForm>
 
-              <S.StyledDayPicker
-                mode="single"
-                selected={selected}
-                onSelect={setSelected}
-                locale={ru}
-                footer={
-                  selected
-                    ? `Срок исполнения: ${selected.toLocaleDateString()}`
-                    : "Выберите срок исполнения."
-                }
-              />
+              <S.Dates>
+                <S.PopNewCardData>Даты</S.PopNewCardData>
+                <S.StyledDayPicker
+                  mode="single"
+                  selected={selected}
+                  onSelect={setSelected}
+                  locale={ru}
+                  footer={
+                    selected
+                      ? `Срок исполнения: ${selected.toLocaleDateString()}`
+                      : "Выберите срок исполнения."
+                  }
+                />
+              </S.Dates>
             </S.PopNewCardWrap>
             <S.Categories>
               <S.CategoriesP className="subttl">Категория</S.CategoriesP>

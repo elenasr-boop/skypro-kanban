@@ -2,24 +2,29 @@
 // import Calendar from "../../calendar/calendar";
 import { Link, useNavigate } from "react-router-dom";
 import { StyledDayPicker } from "../popNewCards/popNewCards.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ru } from "date-fns/locale";
 import { deleteTodo } from "../../../api";
+import { CardContext, UserContext } from "../../../context/userContext";
 
-const PopBrowse = ({ id, cards, setCards }) => {
+const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
+  const {user} = useContext(UserContext);
+  const {cards, setCards} = useContext(CardContext);
 
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
 
   async function onDeleteButton () {
-    const result = await deleteTodo ({id: id, setCards: setCards});
+    try {
+      const result = await deleteTodo ({id: id, token: user.token});
 
-    if (result.status === 201) {
-      console.log("Задача успешно удалена");
+      setCards(result.tasks)
       navigate("/");
+    } catch (_) {
+      console.log('Error');
     }
   }
 

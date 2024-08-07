@@ -276,8 +276,8 @@ export const StyledDayPicker = styled(DayPicker)`
 
 export const Fieldset = styled.fieldset`
   border: none;
-  
-  input[type=radio]:checked + label {
+
+  input[type="radio"]:checked + label {
     div {
       opacity: 1 !important;
     }
@@ -290,4 +290,18 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   cursor: pointer;
+`;
+
+export const PopNewCardData = styled.div`
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 16.41px;
+  text-align: left;
+  color: #000;
+`;
+
+export const Dates = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

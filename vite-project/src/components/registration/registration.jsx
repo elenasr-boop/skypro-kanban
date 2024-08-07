@@ -10,13 +10,15 @@ import {
   RegisterText,
   ErrorMessage,
 } from "../authorization/authorization.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { register } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
-export function Register({ loginFunc }) {
+export function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const {loginFunc} = useContext(UserContext);
 
   const [registerData, setRegisterData] = useState({
     login: "",

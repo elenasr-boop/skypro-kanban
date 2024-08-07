@@ -10,13 +10,13 @@ import {
   RegisterLink,
   RegisterText,
 } from "./authorization.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { auth } from "../../api";
-import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 export function Authorization() {
   const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
+  const {loginUser} = useContext(UserContext);
 
   const [authData, setAuthData] = useState({
     login: "",
@@ -37,17 +37,22 @@ export function Authorization() {
     if (authData.login === "" || authData.password === "") {
       setIsError(true);
     } else {
-      const result = await auth({
-        login: authData.login,
-        password: authData.password,
-      });
-
-      if (result === 201) {
-        navigate("/");
-        setIsError(false);
-      } else {
+      try {
+        const result = await auth({
+          login: authData.login,
+          password: authData.password,
+        });
+        loginUser(result.user);
+      } catch (_) {
         setIsError(true);
       }
+
+      // if (result === 201) {
+      //   navigate("/");
+      //   setIsError(false);
+      // } else {
+      //   setIsError(true);
+      // }
     }
   }
 

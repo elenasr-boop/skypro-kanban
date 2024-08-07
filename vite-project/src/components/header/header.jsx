@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as S from "./header.styled.js";
 import { Container } from "../main/main.styled.js";
 import { ExitButton, ExitButtonA, SetTheme, SetThemeInput, SetThemeP, UserSetMail, UserSetName } from "./popUser.styled.js";
+import { UserContext } from "../../context/userContext.jsx";
 
 const Header = () => {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const toggleDropdown = () => setIsUserOpen((prevState) => !prevState);
+  const {user} = useContext(UserContext);
 
   return (
     <S.Header>
@@ -26,11 +28,11 @@ const Header = () => {
               <S.HeaderBtnMainNewA to="/create">Создать новую задачу</S.HeaderBtnMainNewA>
             </S.HeaderBtnMainNew>
             <S.HeaderUser onClick={toggleDropdown}>
-              {JSON.parse(localStorage.getItem("user")).name}
+              {user.name}
             </S.HeaderUser>
             {isUserOpen && (<S.HeaderPopUserSet>
-              <UserSetName>{JSON.parse(localStorage.getItem("user")).name}</UserSetName>
-              <UserSetMail>{JSON.parse(localStorage.getItem("user")).login}</UserSetMail>
+              <UserSetName>{user.name}</UserSetName>
+              <UserSetMail>{user.login}</UserSetMail>
               <SetTheme>
                 <SetThemeP>Темная тема</SetThemeP>
                 <SetThemeInput type="checkbox" name="checkbox" />

@@ -7,43 +7,36 @@ import { Exit } from "./pages/Logout";
 import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
-import { useState } from "react";
-import { UserContext } from "./userContext.jsx";
+import { CardProvider, UserProvider } from "./context/userContext.jsx";
 import PopNewCard from "./components/popUps/popNewCards/popNewCards";
 
 function App() {
-  function exitFunc() {
-    localStorage.setItem("user", null);
-    localStorage.setItem("token", "");
-  }
-
-  const [cards, setCards] = useState([]);
-  const [user, setUser] = useState(
-    localStorage.getItem("user") !== "null" ? JSON.parse(localStorage.getItem("user")) : null
-  );
-
-  function updateUser(newUser) {
-    setUser(newUser);
-  }
-
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
-      <Routes>
-        <Route element={<PrivateRoute/>}>
-          <Route
-            path="/"
-            element={<MainPage cards={cards} setCards={setCards} />}
-          >
-            <Route path="card/:id" element={<CardId cards={cards} setCards={setCards}/>} />
-            <Route path="exit" element={<Exit exitFunc={exitFunc} />} />
-            <Route path="create" element={<PopNewCard setCards={setCards} />} />
+    <UserProvider>
+      <CardProvider>
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route
+              path="/"
+              element={<MainPage />}
+            >
+              <Route
+                path="card/:id"
+                element={<CardId />}
+              />
+              <Route path="exit" element={<Exit />} />
+              <Route
+                path="create"
+                element={<PopNewCard />}
+              />
+            </Route>
           </Route>
-        </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </UserContext.Provider>
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </CardProvider>
+    </UserProvider>
   );
 }
 
