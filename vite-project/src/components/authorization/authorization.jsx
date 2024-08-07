@@ -10,13 +10,13 @@ import {
   RegisterLink,
   RegisterText,
 } from "./authorization.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { auth } from "../../api";
-import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
-export function Authorization({ loginFunc }) {
+export function Authorization() {
   const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
+  const {loginUser} = useContext(UserContext);
 
   const [authData, setAuthData] = useState({
     login: "",
@@ -33,19 +33,26 @@ export function Authorization({ loginFunc }) {
     setIsError(false);
   };
 
-  async function clickOnButton () {
+  async function clickOnButton() {
     if (authData.login === "" || authData.password === "") {
       setIsError(true);
     } else {
-      const result = await auth ( {login: authData.login, password: authData.password} );
-    
-    if (result === 201) {
-      loginFunc();
-      navigate("/");
-      setIsError(false);
-    } else {
-      setIsError(true);
-    }
+      try {
+        const result = await auth({
+          login: authData.login,
+          password: authData.password,
+        });
+        loginUser(result.user);
+      } catch (_) {
+        setIsError(true);
+      }
+
+      // if (result === 201) {
+      //   navigate("/");
+      //   setIsError(false);
+      // } else {
+      //   setIsError(true);
+      // }
     }
   }
 
@@ -55,20 +62,40 @@ export function Authorization({ loginFunc }) {
         <InnerBlock>
           <Entrance>Вход</Entrance>
           <LoginInputs>
-            <LoginInput placeholder="Эл. почта" value={authData.login} onChange={handleInputChange} name="login" label="Логин" $isError={isError} />
-            <LoginInput placeholder="Пароль" onChange={handleInputChange} value={authData.password} name="password" label="Пароль" type="password"  $isError={isError} />
+            <LoginInput
+              placeholder="Эл. почта"
+              value={authData.login}
+              onChange={handleInputChange}
+              name="login"
+              label="Логин"
+              $isError={isError}
+            />
+            <LoginInput
+              placeholder="Пароль"
+              onChange={handleInputChange}
+              value={authData.password}
+              name="password"
+              label="Пароль"
+              type="password"
+              $isError={isError}
+            />
           </LoginInputs>
-          { isError ? 
+          {isError ? (
             <ErrorMessage>
-              Введенные вами данные не распознаны. Проверьте свой логин и пароль и повторите попытку входа.
-            </ErrorMessage> : <></>}
-            <LoginButton
-              onClick={() => {
-                clickOnButton();
-              }} disabled={isError}
-            >
-              Войти
-            </LoginButton>
+              Введенные вами данные не распознаны. Проверьте свой логин и пароль
+              и повторите попытку входа.
+            </ErrorMessage>
+          ) : (
+            <></>
+          )}
+          <LoginButton
+            onClick={() => {
+              clickOnButton();
+            }}
+            disabled={isError}
+          >
+            Войти
+          </LoginButton>
           <RegisterText>
             Нужно зарегистрироваться?{" "}
             <RegisterLink to="/registration">

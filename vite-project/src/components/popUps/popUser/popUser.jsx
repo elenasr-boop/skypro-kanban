@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { PopExit } from "./popUser.styled";
+import { useContext } from "react";
+import { UserContext } from "../../../context/userContext";
 
-const PopUser = ( {exitFunc} ) => {
+
+const PopUser = () => {
+  const {exitFunc} = useContext(UserContext);
+
   return (
     <PopExit>
       <div className="pop-exit__container">
@@ -11,9 +16,7 @@ const PopUser = ( {exitFunc} ) => {
           </div>
           <form className="pop-exit__form" id="formExit" action="#">
             <div className="pop-exit__form-group">
-              <button className="pop-exit__exit-yes _hover01" id="exitYes" onClick={() => {
-                exitFunc();
-              }}>
+              <button className="pop-exit__exit-yes _hover01" id="exitYes" onClick={exitFunc}>
                 <Link to="/login" >Да, выйти</Link>
               </button>
               <button className="pop-exit__exit-no _hover03" id="exitNo">

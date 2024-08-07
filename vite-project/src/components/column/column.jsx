@@ -1,8 +1,11 @@
+import { useContext } from "react";
+import { CardContext } from "../../context/userContext.jsx";
 import Card from "../card/card";
 import { CardsStyled, ColumnTitle, ColumnTitleP, MainColumn } from "../column/column.styled.js";
 
-const Column = ({cardList}) => {
+const Column = () => {
   const arr = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];
+  const {cards} = useContext(CardContext); 
 
   return (
     <>
@@ -12,7 +15,7 @@ const Column = ({cardList}) => {
               <ColumnTitleP>{el}</ColumnTitleP>
             </ColumnTitle>
             <CardsStyled>
-              {cardList.map((cardEl) => {
+              {cards.map((cardEl) => {
                 if (cardEl.status === el) {
                   return (<Card
                   card={cardEl}

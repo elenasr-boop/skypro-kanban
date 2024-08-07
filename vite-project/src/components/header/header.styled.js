@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Header = styled.header`
@@ -59,7 +60,7 @@ export const HeaderBtnMainNew = styled.button`
   }
 `;
 
-export const HeaderBtnMainNewA = styled.a`
+export const HeaderBtnMainNewA = styled(Link)`
     color: #ffffff;
 `;
 
