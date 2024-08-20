@@ -34,13 +34,19 @@ export function Authorization() {
   };
 
   async function clickOnButton() {
-    if (authData.login === "" || authData.password === "") {
+    if (authData.login.replaceAll(/\s+/g, '') === "" || authData.password.replaceAll(/\s+/g, '') === "") {
       setIsError(true);
     } else {
       try {
         const result = await auth({
-          login: authData.login,
-          password: authData.password,
+          login: authData.login.replaceAll(/\s+/g, '').replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;"),
+          password: authData.password.replaceAll(/\s+/g, '').replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;"),
         });
         loginUser(result.user);
       } catch (_) {

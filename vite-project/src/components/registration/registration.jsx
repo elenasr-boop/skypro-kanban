@@ -39,18 +39,29 @@ export function Register() {
 
   async function clickOnButton() {
     if (
-      registerData.login === "" ||
+      registerData.login.replaceAll(/\s+/g, '') === "" ||
       registerData.name === "" ||
-      registerData.password === ""
+      registerData.password.replaceAll(/\s+/g, '') === ""
     ) {
       setError(
         "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
       );
     } else {
       const result = await register({
-        login: registerData.login,
-        name: registerData.name,
-        password: registerData.password,
+        login: registerData.login.replaceAll(/\s+/g, '')
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+        name: registerData.name.replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+        password: registerData.password.replaceAll(/\s+/g, '')
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
       });
 
       if (result === 201) {

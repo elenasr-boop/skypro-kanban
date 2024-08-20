@@ -25,10 +25,10 @@ const PopNewCard = () => {
 
     try {
       const result = await createTodo({
-        title: todo.title,
+        title: todo.title.replaceAll(/\s+/g, ''),
         topic: topic,
         status: "Без статуса",
-        description: todo.description,
+        description: todo.description.replaceAll(/\s+/g, ''),
         date: data,
         token: user.token,
       });
