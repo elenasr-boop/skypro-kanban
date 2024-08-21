@@ -17,7 +17,7 @@ import { UserContext } from "../../context/userContext";
 import { deleteSpaces, safeString } from "../../helpers";
 
 export function Register() {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const {loginFunc} = useContext(UserContext);
 
@@ -34,8 +34,7 @@ export function Register() {
       ...registerData,
       [name]: value,
     });
-
-    setError("");
+    setError(null);
   };
 
   async function clickOnButton() {
@@ -44,27 +43,25 @@ export function Register() {
       deleteSpaces( {str: registerData.name} ) === "" ||
       deleteSpaces( {str: registerData.password} ) === ""
     ) {
-      setError(
-        "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
-      );
-    } else {
-      const result = await register({
-        login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
-        name: safeString(registerData.name),
-        password: safeString({str: deleteSpaces( {str: registerData.password} )}),
+      setError({text: "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.", 
+        login: deleteSpaces( {str: registerData.login} )  === "",
+        name: registerData.name.trim()  === "",
+        password: deleteSpaces( {str: registerData.password} )  === "",
       });
-
-      if (result === 201) {
+    } else {
+      try {
+        await register({
+          login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
+          name: registerData.name.trim(),
+          password: safeString({str: deleteSpaces( {str: registerData.password} )}),
+        });
         loginFunc();
         navigate("/");
         setError("");
-      } else if (result === 400) {
-        setError(
-          "Вы ввели почту, которая уже использовалась для регистрации. Попробуйте другую почту."
-        );
+      } catch (_) {
+        setError({text: "Пользователь с таким логином уже существует.", login: true});
       }
     }
-    // setError("Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.");
   }
 
   return (
@@ -79,7 +76,7 @@ export function Register() {
               onChange={handleInputChange}
               name="name"
               label="Имя"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('name' in error ? error.name : error.name) }
             />
             <LoginInput
               placeholder="Эл. почта"
@@ -87,7 +84,7 @@ export function Register() {
               onChange={handleInputChange}
               name="login"
               label="Логин"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('login' in error ? error.login : error.login)}
               type="email"
             />
             <LoginInput
@@ -97,15 +94,15 @@ export function Register() {
               name="password"
               label="Пароль"
               type="password"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('password' in error ? error.password : error.password)}
             />
           </LoginInputs>
-          {error !== "" ? <ErrorMessage>{error}</ErrorMessage> : <></>}
+          {error !== null ? <ErrorMessage>{error.text}</ErrorMessage> : <></>}
           <LoginButton
             onClick={() => {
               clickOnButton();
             }}
-            disabled={error === "" ? false : true}
+            disabled={error !== null}
           >
             Зарегистрироваться
           </LoginButton>
