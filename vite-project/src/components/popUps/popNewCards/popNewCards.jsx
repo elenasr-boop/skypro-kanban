@@ -6,6 +6,7 @@ import { ru } from "date-fns/locale/ru";
 import { createTodo } from "../../../api.js";
 import { parse } from "date-fns/parse";
 import { CardContext, UserContext } from "../../../context/userContext.jsx";
+import { deleteSpaces, safeString } from "../../../helpers.js";
 
 const PopNewCard = () => {
   const { user } = useContext(UserContext);
@@ -25,10 +26,10 @@ const PopNewCard = () => {
 
     try {
       const result = await createTodo({
-        title: todo.title.replaceAll(/\s+/g, ''),
+        title: safeString(deleteSpaces( {str: todo.title} )),
         topic: topic,
         status: "Без статуса",
-        description: todo.description.replaceAll(/\s+/g, ''),
+        description: safeString(deleteSpaces( {str: todo.description} )),
         date: data,
         token: user.token,
       });

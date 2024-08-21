@@ -14,6 +14,7 @@ import { useContext, useState } from "react";
 import { register } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { deleteSpaces, safeString } from "../../helpers";
 
 export function Register() {
   const [error, setError] = useState("");
@@ -39,29 +40,18 @@ export function Register() {
 
   async function clickOnButton() {
     if (
-      registerData.login.replaceAll(/\s+/g, '') === "" ||
-      registerData.name === "" ||
-      registerData.password.replaceAll(/\s+/g, '') === ""
+      deleteSpaces( {str: registerData.login} )  === "" ||
+      deleteSpaces( {str: registerData.name} ) === "" ||
+      deleteSpaces( {str: registerData.password} ) === ""
     ) {
       setError(
         "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
       );
     } else {
       const result = await register({
-        login: registerData.login.replaceAll(/\s+/g, '')
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
-        name: registerData.name.replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
-        password: registerData.password.replaceAll(/\s+/g, '')
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
+        login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
+        name: safeString(registerData.name),
+        password: safeString({str: deleteSpaces( {str: registerData.password} )}),
       });
 
       if (result === 201) {

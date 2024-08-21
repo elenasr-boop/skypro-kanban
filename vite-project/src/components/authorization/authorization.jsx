@@ -13,6 +13,7 @@ import {
 import { useContext, useState } from "react";
 import { auth } from "../../api";
 import { UserContext } from "../../context/userContext";
+import { deleteSpaces, safeString } from "../../helpers";
 
 export function Authorization() {
   const [isError, setIsError] = useState(false);
@@ -34,19 +35,13 @@ export function Authorization() {
   };
 
   async function clickOnButton() {
-    if (authData.login.replaceAll(/\s+/g, '') === "" || authData.password.replaceAll(/\s+/g, '') === "") {
+    if (deleteSpaces({str: authData.login}) === "" || deleteSpaces({str: authData.password}) === "") {
       setIsError(true);
     } else {
       try {
         const result = await auth({
-          login: authData.login.replaceAll(/\s+/g, '').replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;"),
-          password: authData.password.replaceAll(/\s+/g, '').replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;"),
+          login: safeString(deleteSpaces( {str: authData.login} )),
+          password: safeString(deleteSpaces( {str: authData.password} )),
         });
         loginUser(result.user);
       } catch (_) {
