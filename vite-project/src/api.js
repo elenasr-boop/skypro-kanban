@@ -49,10 +49,10 @@ export async function createTodo ( {title, topic, status, description, date, tok
             'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-            "title": title,
+            "title": title === "" ? "Новая задача" : title,
             "topic": topic,
             "status": status,
-            "description": description,
+            "description": description === "" ? "Подробное описание задачи" : description,
             "date": date,
         })
     })

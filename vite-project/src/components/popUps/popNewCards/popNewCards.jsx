@@ -6,7 +6,7 @@ import { ru } from "date-fns/locale/ru";
 import { createTodo } from "../../../api.js";
 import { parse } from "date-fns/parse";
 import { UserContext } from "../../../context/userContext.jsx";
-import { deleteSpaces, safeString } from "../../../helpers.js";
+import { safeString } from "../../../helpers.js";
 import { CardContext } from "../../../context/cardContext.jsx";
 
 const PopNewCard = () => {
@@ -16,9 +16,10 @@ const PopNewCard = () => {
   const [selected, setSelected] = useState(false);
   const [topic, setTopic] = useState("Research");
   const [todo, setTodo] = useState({
-    title: "Новая задача",
+    title: "",
     description: "",
   });
+  const [isError, setIsError] = useState(false);
 
   async function clickOnButtonCreate() {
     const data = selected
@@ -27,18 +28,18 @@ const PopNewCard = () => {
 
     try {
       const result = await createTodo({
-        title: safeString(deleteSpaces( {str: todo.title} )),
+        title: safeString( {str: todo.title.trim()} ),
         topic: topic,
         status: "Без статуса",
-        description: safeString(deleteSpaces( {str: todo.description} )),
+        description: safeString( {str: todo.description.trim()} ),
         date: data,
         token: user.token,
       });
-
       setCards(result.tasks);
       navigate("/");
-    } catch (_) {
-      console.log("Error");
+    } catch (e) {
+      console.log(e.message);
+      setIsError(true);
     }
   }
 
@@ -167,6 +168,9 @@ const PopNewCard = () => {
                 </S.Fieldset>
               </S.CategoriesThemes>
             </S.Categories>
+            {isError && (
+              <S.Error>Ошибка в загрузке</S.Error>
+            )}
             <S.FormCreate
               onClick={() => {
                 clickOnButtonCreate();
