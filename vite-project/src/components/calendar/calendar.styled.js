@@ -69,6 +69,7 @@ export const StyledDayPicker = styled(DayPicker)`
     font-weight: 600;
     line-height: 16.41px;
     text-align: left;
+    text-transform: capitalize;
   }
 
   .rdp-months {

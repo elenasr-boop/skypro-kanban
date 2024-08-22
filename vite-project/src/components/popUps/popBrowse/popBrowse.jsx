@@ -4,6 +4,7 @@ import { deleteTodo } from "../../../api";
 import { UserContext } from "../../../context/userContext";
 import { CardContext } from "../../../context/cardContext";
 import Calendar from "../../calendar/calendar";
+import * as S from "./popBrowse.styled.js"
 
 const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
@@ -14,6 +15,14 @@ const PopBrowse = ({ id }) => {
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
+
+  let bgcolor = "";
+  switch (card.topic) {
+    case "Web Design": bgcolor = "_orange"; break;
+    case "Research": bgcolor = "_green"; break;
+    case "Copywriting": bgcolor = "_purple"; break;
+    default: bgcolor = "_gray"; break;
+  }
 
   async function onDeleteButton () {
     try {
@@ -27,100 +36,85 @@ const PopBrowse = ({ id }) => {
   }
 
   return (
-    <div className="pop-browse" id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">{card.title}</h3>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">{card.topic}</p>
-              </div>
-            </div>
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
-              <div className="status__themes">
-                <div className="status__theme _hide">
-                  <p>Без статуса</p>
-                </div>
-                <div className="status__theme _gray">
-                  <p className="_gray">Нужно сделать</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
-            </div>
-            <div className="pop-browse__wrap">
-              <form
-                className="pop-browse__form form-browse"
+    <S.popBrowse>
+      <S.popBrowseContainer>
+        <S.popBrowseBlock>
+          <S.popBrowseContent>
+            <S.popBrowseTopBlock>
+              <S.popBrowseTtl>{card.title}</S.popBrowseTtl>
+              <S.ActiveCategorie $topicColor={bgcolor}>
+                <p>{card.topic}</p>
+              </S.ActiveCategorie>
+            </S.popBrowseTopBlock>
+            <S.Status>
+              <p>Статус</p>
+              <S.StatusThemes>
+                <S.StatusTheme>
+                  <p>{card.status}</p>
+                </S.StatusTheme>
+              </S.StatusThemes>
+            </S.Status>
+            <S.popBrowseWrap>
+              <S.popBrowseForm
                 id="formBrowseCard"
                 action="#"
               >
-                <div className="form-browse__block">
+                <S.formBrowseBlock>
                   <label htmlFor="textArea01" className="subttl">
                     Описание задачи
                   </label>
-                  <textarea
-                    className="form-browse__area"
+                  <S.formBrowseArea
                     name="text"
                     id="textArea01"
                     readOnly
                     value={card.description}
                     placeholder="Введите описание задачи..."
                   />
-                </div>
-              </form>
+                </S.formBrowseBlock>
+              </S.popBrowseForm>
               <Calendar selected={selected} setSelected={setSelected} size="1.75" />
-            </div>
+            </S.popBrowseWrap>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
-              <div className="categories__theme _orange _active-category">
-                <p className="_orange">{card.topic}</p>
+              <div className={bgcolor}>
+                <p className={bgcolor}>{card.topic}</p>
               </div>
             </div>
-            <div className="pop-browse__btn-browse ">
-              <div className="btn-group">
-                <button className="btn-browse__edit _btn-bor _hover03">
+            <S.popBrowseBtnBrowse>
+              <div>
+                <S.btnBor>
                   <a href="#">Редактировать задачу</a>
-                </button>
-                <button className="btn-browse__delete _btn-bor _hover03" onClick={() => onDeleteButton()}>
+                </S.btnBor>
+                <S.btnBor onClick={() => onDeleteButton()}>
                   <div>Удалить задачу</div>
-                </button>
+                </S.btnBor>
               </div>
-              <button className="btn-browse__close _btn-bg _hover01">
+              <S.btnBg01>
                 <Link to="/">Закрыть</Link>
-              </button>
-            </div>
-            <div className="pop-browse__btn-edit _hide">
-              <div className="btn-group">
-                <button className="btn-edit__edit _btn-bg _hover01">
+              </S.btnBg01>
+            </S.popBrowseBtnBrowse>
+            <S.popBrowseBtnEdit>
+              <div>
+                <S.btnBg01>
                   <a href="#">Сохранить</a>
-                </button>
-                <button className="btn-edit__edit _btn-bor _hover03">
+                </S.btnBg01>
+                <S.btnBg03>
                   <a href="#">Отменить</a>
-                </button>
-                <button
-                  className="btn-edit__delete _btn-bor _hover03"
+                </S.btnBg03>
+                <S.btnBor
                   id="btnDelete" onClick={() => onDeleteButton()}
                 >
                   <div>Удалить задачу</div>
-                </button>
+                </S.btnBor>
               </div>
-              <button className="btn-edit__close _btn-bg _hover01">
+              <S.btnBg01>
                 <a href="#">Закрыть</a>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </S.btnBg01>
+            </S.popBrowseBtnEdit>
+          </S.popBrowseContent>
+        </S.popBrowseBlock>
+      </S.popBrowseContainer>
+    </S.popBrowse>
   );
 };
 
