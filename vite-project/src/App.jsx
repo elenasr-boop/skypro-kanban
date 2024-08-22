@@ -7,8 +7,9 @@ import { Exit } from "./pages/Logout";
 import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
-import { CardProvider, UserProvider } from "./context/userContext.jsx";
+import { UserProvider } from "./context/userContext.jsx";
 import PopNewCard from "./components/popUps/popNewCards/popNewCards";
+import { CardProvider } from "./context/cardContext.jsx";
 
 function App() {
   return (

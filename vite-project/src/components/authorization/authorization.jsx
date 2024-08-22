@@ -53,7 +53,6 @@ export function Authorization() {
           login: safeString( {str: deleteSpaces({ str: authData.login })} ),
           password: safeString( {str: deleteSpaces({ str: authData.password })} ),
         });
-        console.log(result);
         if ('error' in result) {
           throw new Error(result.error);
         }

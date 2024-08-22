@@ -5,8 +5,9 @@ import "react-day-picker/style.css";
 import { ru } from "date-fns/locale/ru";
 import { createTodo } from "../../../api.js";
 import { parse } from "date-fns/parse";
-import { CardContext, UserContext } from "../../../context/userContext.jsx";
+import { UserContext } from "../../../context/userContext.jsx";
 import { deleteSpaces, safeString } from "../../../helpers.js";
+import { CardContext } from "../../../context/cardContext.jsx";
 
 const PopNewCard = () => {
   const { user } = useContext(UserContext);

@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { CardContext } from "../../context/userContext.jsx";
 import Card from "../card/card";
 import { CardsStyled, ColumnTitle, ColumnTitleP, MainColumn } from "../column/column.styled.js";
+import { CardContext } from "../../context/cardContext.jsx";
 
 const Column = () => {
   const arr = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];

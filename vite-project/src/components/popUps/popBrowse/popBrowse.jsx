@@ -5,7 +5,8 @@ import { StyledDayPicker } from "../popNewCards/popNewCards.styled";
 import { useContext, useState } from "react";
 import { ru } from "date-fns/locale";
 import { deleteTodo } from "../../../api";
-import { CardContext, UserContext } from "../../../context/userContext";
+import { UserContext } from "../../../context/userContext";
+import { CardContext } from "../../../context/cardContext";
 
 const PopBrowse = ({ id }) => {
   const navigate = useNavigate();

@@ -6,7 +6,8 @@ import { Wrapper } from "../components/main/main.styled.js";
 import { GlobalStyle } from "../global.styled.js";
 import { Outlet } from "react-router-dom";
 import { Loading } from "../components/loading/loading.jsx";
-import { CardContext, UserContext } from "../context/userContext.jsx";
+import { UserContext } from "../context/userContext.jsx";
+import { CardContext } from "../context/cardContext.jsx";
 
 export function MainPage() {
   const {user} = useContext(UserContext);

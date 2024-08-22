@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext(null);
-export const CardContext = createContext(null);
 
 function getUser () {
     try {
@@ -32,9 +31,3 @@ export const UserProvider = ({ children }) => {
 
   return <UserContext.Provider value={{loginUser, user, exitFunc}}>{children}</UserContext.Provider>;
 };
-
-export const CardProvider = ({ children }) => {
-    const [cards, setCards] = useState([]);
-
-    return <CardContext.Provider value={{cards, setCards}}>{children}</CardContext.Provider>
-}
