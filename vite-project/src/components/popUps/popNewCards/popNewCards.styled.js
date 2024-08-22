@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { topicStyles } from "../../card/card.styled";
-import { DayPicker } from "react-day-picker";
 
 export const PopNewCard = styled.div`
   width: 100%;
@@ -244,36 +243,6 @@ export const CategoriesThemeP = styled.p`
   color: ${({ $color }) => topicStyles[$color]?.color || "#06b16e"};
 `;
 
-export const StyledDayPicker = styled(DayPicker)`
-  --rdp-accent-color: rgba(148, 166, 190, 1);
-  color: rgba(148, 166, 190, 1);
-  --rdp-day-height: 2rem;
-  --rdp-day-width: 2rem;
-
-  .rdp-selected {
-    background-color: rgba(148, 166, 190, 1);
-    color: #fff;
-    border-radius: 18px;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 11.72px;
-    letter-spacing: -0.02em;
-    text-align: center;
-  }
-
-  .rdp-day {
-    border: none;
-    width: 22px;
-    height: 22px;
-  }
-
-  .rdp-day:hover {
-    background-color: rgba(234, 238, 246, 1);
-    border-radius: 18px;
-  }
-`;
-
 export const Fieldset = styled.fieldset`
   border: none;
 
@@ -290,15 +259,6 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   cursor: pointer;
-`;
-
-export const PopNewCardData = styled.div`
-  font-family: Roboto;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 16.41px;
-  text-align: left;
-  color: #000;
 `;
 
 export const Dates = styled.div`

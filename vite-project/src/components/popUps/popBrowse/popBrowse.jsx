@@ -1,12 +1,9 @@
-// import { lightFormat } from "date-fns";
-// import Calendar from "../../calendar/calendar";
 import { Link, useNavigate } from "react-router-dom";
-import { StyledDayPicker } from "../popNewCards/popNewCards.styled";
 import { useContext, useState } from "react";
-import { ru } from "date-fns/locale";
 import { deleteTodo } from "../../../api";
 import { UserContext } from "../../../context/userContext";
 import { CardContext } from "../../../context/cardContext";
+import Calendar from "../../calendar/calendar";
 
 const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
@@ -80,12 +77,7 @@ const PopBrowse = ({ id }) => {
                   />
                 </div>
               </form>
-              <StyledDayPicker
-                mode="single"
-                selected={selected}
-                onSelect={setSelected}
-                locale={ru}
-              />
+              <Calendar selected={selected} setSelected={setSelected} size="1.75" />
             </div>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>

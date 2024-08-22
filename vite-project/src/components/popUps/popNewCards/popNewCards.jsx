@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./popNewCards.styled.js";
 import { useContext, useState } from "react";
-import "react-day-picker/style.css";
-import { ru } from "date-fns/locale/ru";
 import { createTodo } from "../../../api.js";
 import { parse } from "date-fns/parse";
 import { UserContext } from "../../../context/userContext.jsx";
 import { safeString } from "../../../helpers.js";
 import { CardContext } from "../../../context/cardContext.jsx";
+import Calendar from "../../calendar/calendar.jsx";
 
 const PopNewCard = () => {
   const { user } = useContext(UserContext);
@@ -91,20 +90,7 @@ const PopNewCard = () => {
                 </S.FormNewBlock>
               </S.PopNewCardForm>
 
-              <S.Dates>
-                <S.PopNewCardData>Даты</S.PopNewCardData>
-                <S.StyledDayPicker
-                  mode="single"
-                  selected={selected}
-                  onSelect={setSelected}
-                  locale={ru}
-                  footer={
-                    selected
-                      ? `Срок исполнения: ${selected.toLocaleDateString()}`
-                      : "Выберите срок исполнения."
-                  }
-                />
-              </S.Dates>
+              <Calendar selected={selected} setSelected={setSelected} size="2" />
             </S.PopNewCardWrap>
             <S.Categories>
               <S.CategoriesP className="subttl">Категория</S.CategoriesP>
