@@ -19,7 +19,7 @@ import { deleteSpaces, safeString } from "../../helpers";
 export function Register() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const {loginFunc} = useContext(UserContext);
+  const {loginUser} = useContext(UserContext);
 
   const [registerData, setRegisterData] = useState({
     login: "",
@@ -50,16 +50,25 @@ export function Register() {
       });
     } else {
       try {
-        await register({
+        setError(null);
+        const result = await register({
           login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
           name: registerData.name.trim(),
           password: safeString({str: deleteSpaces( {str: registerData.password} )}),
         });
-        loginFunc();
+        if ('error' in result) {
+          throw new Error(result.error);
+        }
+        loginUser(result.user);
         navigate("/");
-        setError("");
-      } catch (_) {
-        setError({text: "Пользователь с таким логином уже существует.", login: true});
+      } catch (e) {
+        let text = '';
+        if (e.message === "Failed to fetch") {
+          text = "Проверьте подключение к интернету или попробуйте позже";
+        } else {
+          text = e.message;
+        }
+        setError({text: text});
       }
     }
   }
