@@ -4,6 +4,7 @@ export const GlobalStyle = createGlobalStyle`
 #root {
   margin: 0 auto;
   text-align: center;
+  height: 100vh;
 }
 
 * {
