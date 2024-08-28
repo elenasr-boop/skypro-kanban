@@ -7,7 +7,7 @@ export const LoginBlock = styled.div`
   justify-content: center;
   padding-top: 185px;
   padding-bottom: 140px;
-  height: -webkit-fill-available;
+  height: 100vh;
 `;
 
 export const MainBlock = styled.div`
@@ -113,6 +113,7 @@ export const RegisterLink = styled(Link)`
   line-height: 21px;
   letter-spacing: -0.01em;
   text-align: center;
+  text-decoration: underline;
   color: rgba(148, 166, 190, 0.4);
 `;
 

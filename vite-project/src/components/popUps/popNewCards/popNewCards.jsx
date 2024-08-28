@@ -25,19 +25,23 @@ const PopNewCard = () => {
       ? parse(selected.toLocaleDateString(), "dd.MM.yyyy", new Date())
       : new Date();
 
-    try {
-      const result = await createTodo({
-        title: safeString( {str: todo.title.trim()} ),
-        topic: topic,
-        status: "Без статуса",
-        description: safeString( {str: todo.description.trim()} ),
-        date: data,
-        token: user.token,
-      });
-      setCards(result.tasks);
-      navigate("/");
-    } catch (e) {
-      console.log(e.message);
+    if (todo.title.trim() !== "" || todo.description.trim() !== "" ) {
+      try {
+        const result = await createTodo({
+          title: safeString( {str: todo.title.trim()} ),
+          topic: topic,
+          status: "Без статуса",
+          description: safeString( {str: todo.description.trim()} ),
+          date: data,
+          token: user.token,
+        });
+        setCards(result.tasks);
+        navigate("/");
+      } catch (e) {
+        console.log(e.message);
+        setIsError(true);
+      }
+    } else {
       setIsError(true);
     }
   }
@@ -155,7 +159,7 @@ const PopNewCard = () => {
               </S.CategoriesThemes>
             </S.Categories>
             {isError && (
-              <S.Error>Ошибка в загрузке</S.Error>
+              <S.Error>Ошибка в загрузке, попробуйте снова. </S.Error>
             )}
             <S.FormCreate
               onClick={() => {
