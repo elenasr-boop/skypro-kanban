@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./popNewCards.styled.js";
 import { useContext, useState } from "react";
 import { createTodo } from "../../../api.js";
-import { parse } from "date-fns/parse";
 import { UserContext } from "../../../context/userContext.jsx";
 import { safeString } from "../../../helpers.js";
 import { CardContext } from "../../../context/cardContext.jsx";
@@ -22,7 +21,7 @@ const PopNewCard = () => {
 
   async function clickOnButtonCreate() {
     const data = selected
-      ? parse(selected.toLocaleDateString(), "dd.MM.yyyy", new Date())
+      ? selected
       : new Date();
 
     if (todo.title.trim() !== "" || todo.description.trim() !== "" ) {
