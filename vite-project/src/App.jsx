@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { MainPage } from "./pages/MainPage";
 import { NotFoundPage } from "./pages/NotFound";
@@ -17,19 +16,10 @@ function App() {
       <CardProvider>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route
-              path="/"
-              element={<MainPage />}
-            >
-              <Route
-                path="card/:id"
-                element={<CardId />}
-              />
+            <Route path="/" element={<MainPage />}>
+              <Route path="card/:id" element={<CardId />} />
               <Route path="exit" element={<Exit />} />
-              <Route
-                path="create"
-                element={<PopNewCard />}
-              />
+              <Route path="create" element={<PopNewCard />} />
             </Route>
           </Route>
           <Route path="/login" element={<Login />} />

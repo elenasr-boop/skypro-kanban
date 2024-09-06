@@ -29,7 +29,7 @@ export const ExitButton = styled.button`
   &:hover {
     background-color: #33399b;
     color: #ffffff;
-  };
+  }
 `;
 
 export const ExitButtonA = styled(Link)`

@@ -5,10 +5,18 @@ import { lightFormat } from "date-fns";
 const Card = ({ card, id }) => {
   let bgcolor = "";
   switch (card.topic) {
-    case "Web Design": bgcolor = "_orange"; break;
-    case "Research": bgcolor = "_green"; break;
-    case "Copywriting": bgcolor = "_purple"; break;
-    default: bgcolor = "_gray"; break;
+    case "Web Design":
+      bgcolor = "_orange";
+      break;
+    case "Research":
+      bgcolor = "_green";
+      break;
+    case "Copywriting":
+      bgcolor = "_purple";
+      break;
+    default:
+      bgcolor = "_gray";
+      break;
   }
 
   return (
@@ -59,7 +67,7 @@ const Card = ({ card, id }) => {
                 </clipPath>
               </defs>
             </S.CardDateSvg>
-            <S.CardDateP>{lightFormat(card.date, 'dd-MM-yy')}</S.CardDateP>
+            <S.CardDateP>{lightFormat(card.date, "dd-MM-yy")}</S.CardDateP>
           </S.CardDate>
         </S.CardContent>
       </S.CardsCard>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const LoadingDiv = styled.div`
-height: 600px;
+  height: 600px;
   background-color: #eaeef6;
   display: flex;
   align-items: center;

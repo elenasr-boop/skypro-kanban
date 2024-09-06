@@ -61,7 +61,7 @@ export const HeaderBtnMainNew = styled.button`
 `;
 
 export const HeaderBtnMainNewA = styled(Link)`
-    color: #ffffff;
+  color: #ffffff;
 `;
 
 export const HeaderUser = styled.a`
@@ -76,15 +76,15 @@ export const HeaderUser = styled.a`
 
   &::after {
     content: "";
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 1px;
-  border-left: 1.9px solid #565eef;
-  border-bottom: 1.9px solid #565eef;
-  transform: rotate(-45deg);
-  margin: -6px 0 0 5px;
-  padding: 0;
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    border-left: 1.9px solid #565eef;
+    border-bottom: 1.9px solid #565eef;
+    transform: rotate(-45deg);
+    margin: -6px 0 0 5px;
+    padding: 0;
   }
 
   &:hover {
@@ -114,4 +114,4 @@ export const HeaderPopUserSet = styled.div`
   &:target {
     display: block;
   }
-`
+`;

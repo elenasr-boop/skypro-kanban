@@ -314,14 +314,15 @@ export const StatusThemes = styled.div`
 export const StatusTheme = styled.button`
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: ${({ $active }) => $active ? "#fff" : "#94A6BE"};
-  background-color: ${({ $active }) => $active ? "#94A6BE" : "#fff"};
+  color: ${({ $active }) => ($active ? "#fff" : "#94A6BE")};
+  background-color: ${({ $active }) => ($active ? "#94A6BE" : "#fff")};
   padding: 7px 14px;
   margin-right: 7px;
   margin-bottom: 7px;
   height: 30px;
   text-align: center;
-  display: ${({ $isRedacting, $active }) => $isRedacting || $active ? "block" : "none" };
+  display: ${({ $isRedacting, $active }) =>
+    $isRedacting || $active ? "block" : "none"};
 
   p {
     font-size: 14px;

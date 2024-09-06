@@ -13,12 +13,12 @@ export const CardsStyled = styled.div`
 `;
 
 export const ColumnTitle = styled.div`
-    padding: 0 10px;
-    margin: 15px 0;
+  padding: 0 10px;
+  margin: 15px 0;
 `;
 
 export const ColumnTitleP = styled.p`
-    color: #94a6be;
+  color: #94a6be;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -30,9 +30,9 @@ export const MainColumn = styled.div`
   margin: 0 auto;
   display: block;
 
-  @media (max-width: 1200px){
+  @media (max-width: 1200px) {
     width: 100%;
     margin: 0 auto;
     display: block;
-  };
+  }
 `;

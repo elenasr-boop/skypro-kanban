@@ -1,5 +1,5 @@
 import Column from "../column/column";
-import * as S from "./main.styled.js"
+import * as S from "./main.styled.js";
 
 const Main = () => {
   return (

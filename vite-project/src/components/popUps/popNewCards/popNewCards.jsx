@@ -20,17 +20,15 @@ const PopNewCard = () => {
   const [isError, setIsError] = useState(false);
 
   async function clickOnButtonCreate() {
-    const data = selected
-      ? selected
-      : new Date();
+    const data = selected ? selected : new Date();
 
-    if (todo.title.trim() !== "" || todo.description.trim() !== "" ) {
+    if (todo.title.trim() !== "" || todo.description.trim() !== "") {
       try {
         const result = await createTodo({
-          title: safeString( {str: todo.title.trim()} ),
+          title: safeString({ str: todo.title.trim() }),
           topic: topic,
           status: "Без статуса",
-          description: safeString( {str: todo.description.trim()} ),
+          description: safeString({ str: todo.description.trim() }),
           date: data,
           token: user.token,
         });
@@ -93,7 +91,11 @@ const PopNewCard = () => {
                 </S.FormNewBlock>
               </S.PopNewCardForm>
 
-              <Calendar selected={selected} setSelected={setSelected} size="2" />
+              <Calendar
+                selected={selected}
+                setSelected={setSelected}
+                size="2"
+              />
             </S.PopNewCardWrap>
             <S.Categories>
               <S.CategoriesP className="subttl">Категория</S.CategoriesP>
@@ -158,7 +160,11 @@ const PopNewCard = () => {
               </S.CategoriesThemes>
             </S.Categories>
             {isError && (
-              <S.Error>{todo.title.trim() === "" && todo.description.trim() === "" ? 'Введите название или описание задачи' : 'Ошибка в загрузке, попробуйте снова.' }</S.Error>
+              <S.Error>
+                {todo.title.trim() === "" && todo.description.trim() === ""
+                  ? "Введите название или описание задачи"
+                  : "Ошибка в загрузке, попробуйте снова."}
+              </S.Error>
             )}
             <S.FormCreate
               onClick={() => {
