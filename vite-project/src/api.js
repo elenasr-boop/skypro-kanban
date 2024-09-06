@@ -74,3 +74,23 @@ export async function deleteTodo ( {id, token} ) {
     
     return data;
 }
+
+export async function editTodo ({ id, token, title, topic, status, description, date }) {
+    const res = await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            "title" : title,
+            "topic" : topic,
+            "status" : status,
+            "description" : description,
+            "date" : date,
+        })
+    });
+    
+    const data = await res.json();
+
+    return data;
+}

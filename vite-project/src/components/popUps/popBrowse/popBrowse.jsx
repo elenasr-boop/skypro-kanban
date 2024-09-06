@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { deleteTodo } from "../../../api";
+import { deleteTodo, editTodo } from "../../../api";
 import { UserContext } from "../../../context/userContext";
 import { CardContext } from "../../../context/cardContext";
 import Calendar from "../../calendar/calendar";
@@ -23,7 +23,7 @@ const PopBrowse = ({ id }) => {
     date: new Date(card.date),
     status: card.status,
     description: card.description,
-  }); 
+  });
 
   let bgcolor = "";
   switch (card.topic) {
@@ -52,17 +52,27 @@ const PopBrowse = ({ id }) => {
     }
   }
 
-  function saveButton() {
-    console.log("Идет сохранение");
-    setOldVersion({
-      date: new Date(selected),
-      description: description,
-      status: status,
-    });
-    setIsRedacting(false);
+  async function saveButton() {
+
+    try {
+      const result = await editTodo({ id: id, token: user.token, title: card.title, topic: card.topic, status: status, description: description, date: selected});
+
+      console.log("Идет сохранение");
+
+      setcards(result.tasks);
+
+      setOldVersion({
+        date: new Date(selected),
+        description: description,
+        status: status,
+      });
+      setIsRedacting(false);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  function cancelButton () {
+  function cancelButton() {
     setDescription(oldVersion.description);
     setSelected(oldVersion.date);
     setStatus(oldVersion.status);
@@ -83,19 +93,39 @@ const PopBrowse = ({ id }) => {
             <S.Status>
               <p>Статус</p>
               <S.StatusThemes>
-                <S.StatusTheme $active={status === "Без статуса"} $isRedacting={isRedacting} onClick={() => setStatus("Без статуса")}>
+                <S.StatusTheme
+                  $active={status === "Без статуса"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Без статуса")}
+                >
                   <p>Без статуса</p>
                 </S.StatusTheme>
-                <S.StatusTheme $active={status === "Нужно сделать"} $isRedacting={isRedacting} onClick={() => setStatus("Нужно сделать")}>
+                <S.StatusTheme
+                  $active={status === "Нужно сделать"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Нужно сделать")}
+                >
                   <p>Нужно сделать</p>
                 </S.StatusTheme>
-                <S.StatusTheme $active={status === "В работе"} $isRedacting={isRedacting} onClick={() => setStatus("В работе")}>
+                <S.StatusTheme
+                  $active={status === "В работе"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("В работе")}
+                >
                   <p>В работе</p>
                 </S.StatusTheme>
-                <S.StatusTheme $active={status === "Тестирование"} $isRedacting={isRedacting} onClick={() => setStatus("Тестирование")}>
+                <S.StatusTheme
+                  $active={status === "Тестирование"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Тестирование")}
+                >
                   <p>Тестирование</p>
                 </S.StatusTheme>
-                <S.StatusTheme $active={status === "Готово"} $isRedacting={isRedacting} onClick={() => setStatus("Готово")}>
+                <S.StatusTheme
+                  $active={status === "Готово"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Готово")}
+                >
                   <p>Готово</p>
                 </S.StatusTheme>
               </S.StatusThemes>
