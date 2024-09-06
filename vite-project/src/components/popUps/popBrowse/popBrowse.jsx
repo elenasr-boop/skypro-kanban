@@ -64,6 +64,7 @@ const PopBrowse = ({ id }) => {
         status: status,
       });
       setIsRedacting(false);
+      navigate("/");
     } catch (e) {
       console.log(e);
     }
