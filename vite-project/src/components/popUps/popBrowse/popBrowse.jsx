@@ -53,11 +53,8 @@ const PopBrowse = ({ id }) => {
   }
 
   async function saveButton() {
-
     try {
       const result = await editTodo({ id: id, token: user.token, title: card.title, topic: card.topic, status: status, description: description, date: selected});
-
-      console.log("Идет сохранение");
 
       setcards(result.tasks);
 
@@ -149,8 +146,8 @@ const PopBrowse = ({ id }) => {
               </S.popBrowseForm>
               <Calendar
                 selected={selected}
-                setSelected={setSelected}
-                size="1.75"
+                setSelected={isRedacting ? setSelected : undefined}
+                size="1.75" 
               />
             </S.popBrowseWrap>
             <div className="theme-down__categories theme-down">
