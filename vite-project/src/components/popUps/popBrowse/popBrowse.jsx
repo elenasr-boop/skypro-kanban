@@ -51,7 +51,6 @@ const PopBrowse = ({ id }) => {
     } catch (_) {
       setIsError(true);
       setTimeout(() => setIsError(false), 1500);
-      console.log("Error");
     }
   }
 
@@ -79,7 +78,6 @@ const PopBrowse = ({ id }) => {
     } catch (e) {
       setIsError(true);
       setTimeout(() => setIsError(false), 1500);
-      console.log("error");
     }
   }
 

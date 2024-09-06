@@ -35,7 +35,6 @@ const PopNewCard = () => {
         setcards(result.tasks);
         navigate("/");
       } catch (e) {
-        console.log(e.message);
         setIsError(true);
       }
     } else {
