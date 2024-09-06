@@ -10,7 +10,7 @@ const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
   const {user} = useContext(UserContext);
-  const {cards, setCards} = useContext(CardContext);
+  const {cards, setcards} = useContext(CardContext);
 
   const card = cards.filter((card) => {
     return card._id === id;
@@ -28,7 +28,7 @@ const PopBrowse = ({ id }) => {
     try {
       const result = await deleteTodo ({id: id, token: user.token});
 
-      setCards(result.tasks)
+      setcards(result.tasks)
       navigate("/");
     } catch (_) {
       console.log('Error');

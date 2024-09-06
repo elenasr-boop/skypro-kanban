@@ -9,7 +9,7 @@ import Calendar from "../../calendar/calendar.jsx";
 
 const PopNewCard = () => {
   const { user } = useContext(UserContext);
-  const { setCards } = useContext(CardContext);
+  const { setcards } = useContext(CardContext);
   const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
   const [topic, setTopic] = useState("Research");
@@ -34,7 +34,7 @@ const PopNewCard = () => {
           date: data,
           token: user.token,
         });
-        setCards(result.tasks);
+        setcards(result.tasks);
         navigate("/");
       } catch (e) {
         console.log(e.message);

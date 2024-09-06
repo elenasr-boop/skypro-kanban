@@ -3,8 +3,21 @@ import { useState } from "react";
 
 export const CardContext = createContext(null);
 
-export const CardProvider = ({ children }) => {
-    const [cards, setCards] = useState([]);
+function getCards() {
+    try {
+        return JSON.parse(localStorage.getItem('cards'));
+    } catch (_) {
+        return [];
+    }
+}
 
-    return <CardContext.Provider value={{cards, setCards}}>{children}</CardContext.Provider>
+export const CardProvider = ({ children }) => {
+    const [cards, setCards] = useState(getCards());
+
+    function setcards (cards) {
+        localStorage.setItem('cards', JSON.stringify(cards));
+        setCards(cards);
+    }
+
+    return <CardContext.Provider value={{cards, setcards}}>{children}</CardContext.Provider>
 }

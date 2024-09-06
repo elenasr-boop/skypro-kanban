@@ -4,19 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext(null);
 
-function getUser () {
-    try {
-        return JSON.parse(localStorage.getItem('user'));
-    } catch (_) {
-        return null;
-    }
+function getUser() {
+  try {
+    return JSON.parse(localStorage.getItem("user"));
+  } catch (_) {
+    return null;
+  }
 }
 
 export const UserProvider = ({ children }) => {
-    const navigate = useNavigate();
-  const [user, setUser] = useState(
-    getUser()
-  );
+  const navigate = useNavigate();
+  const [user, setUser] = useState(getUser());
 
   function loginUser(newUser) {
     setUser(newUser);
@@ -29,5 +27,9 @@ export const UserProvider = ({ children }) => {
     setUser(null);
   }
 
-  return <UserContext.Provider value={{loginUser, user, exitFunc}}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ loginUser, user, exitFunc }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
