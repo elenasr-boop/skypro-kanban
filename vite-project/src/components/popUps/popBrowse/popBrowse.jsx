@@ -4,35 +4,51 @@ import { deleteTodo } from "../../../api";
 import { UserContext } from "../../../context/userContext";
 import { CardContext } from "../../../context/cardContext";
 import Calendar from "../../calendar/calendar";
-import * as S from "./popBrowse.styled.js"
+import * as S from "./popBrowse.styled.js";
 
 const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(false);
-  const {user} = useContext(UserContext);
-  const {cards, setcards} = useContext(CardContext);
+  const { user } = useContext(UserContext);
+  const { cards, setcards } = useContext(CardContext);
+  const [isRedacting, setIsRedacting] = useState(false);
 
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
 
+  const [selected, setSelected] = useState(new Date(card.date));
+  const [description, setDescription] = useState(card.description);
+
   let bgcolor = "";
   switch (card.topic) {
-    case "Web Design": bgcolor = "_orange"; break;
-    case "Research": bgcolor = "_green"; break;
-    case "Copywriting": bgcolor = "_purple"; break;
-    default: bgcolor = "_gray"; break;
+    case "Web Design":
+      bgcolor = "_orange";
+      break;
+    case "Research":
+      bgcolor = "_green";
+      break;
+    case "Copywriting":
+      bgcolor = "_purple";
+      break;
+    default:
+      bgcolor = "_gray";
+      break;
   }
 
-  async function onDeleteButton () {
+  async function onDeleteButton() {
     try {
-      const result = await deleteTodo ({id: id, token: user.token});
+      const result = await deleteTodo({ id: id, token: user.token });
 
-      setcards(result.tasks)
+      setcards(result.tasks);
       navigate("/");
     } catch (_) {
-      console.log('Error');
+      console.log("Error");
     }
+  }
+
+  function saveButton() {
+    console.log("Идет сохранение");
+    setIsRedacting(false);
   }
 
   return (
@@ -55,24 +71,27 @@ const PopBrowse = ({ id }) => {
               </S.StatusThemes>
             </S.Status>
             <S.popBrowseWrap>
-              <S.popBrowseForm
-                id="formBrowseCard"
-                action="#"
-              >
+              <S.popBrowseForm id="formBrowseCard" action="#">
                 <S.formBrowseBlock>
                   <label htmlFor="textArea01" className="subttl">
                     Описание задачи
                   </label>
                   <S.formBrowseArea
-                    name="text"
+                    name="description"
                     id="textArea01"
-                    readOnly
-                    value={card.description}
+                    label="Описание"
+                    value={description}
+                    disabled={!isRedacting}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder="Введите описание задачи..."
                   />
                 </S.formBrowseBlock>
               </S.popBrowseForm>
-              <Calendar selected={selected} setSelected={setSelected} size="1.75" />
+              <Calendar
+                selected={selected}
+                setSelected={setSelected}
+                size="1.75"
+              />
             </S.popBrowseWrap>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
@@ -82,9 +101,20 @@ const PopBrowse = ({ id }) => {
             </div>
             <S.popBrowseBtnBrowse>
               <div>
-                <S.btnBor>
-                  <a href="#">Редактировать задачу</a>
-                </S.btnBor>
+                {isRedacting ? (
+                  <>
+                    <S.btnBor onClick={() => saveButton()}>
+                      <p>Сохранить</p>
+                    </S.btnBor>
+                    <S.btnBor onClick={() => setIsRedacting(false)}>
+                      <p>Отменить</p>
+                    </S.btnBor>
+                  </>
+                ) : (
+                  <S.btnBor onClick={() => setIsRedacting(true)}>
+                    <p>Редактировать задачу</p>
+                  </S.btnBor>
+                )}
                 <S.btnBor onClick={() => onDeleteButton()}>
                   <div>Удалить задачу</div>
                 </S.btnBor>
@@ -93,24 +123,6 @@ const PopBrowse = ({ id }) => {
                 <Link to="/">Закрыть</Link>
               </S.btnBg01>
             </S.popBrowseBtnBrowse>
-            <S.popBrowseBtnEdit>
-              <div>
-                <S.btnBg01>
-                  <a href="#">Сохранить</a>
-                </S.btnBg01>
-                <S.btnBg03>
-                  <a href="#">Отменить</a>
-                </S.btnBg03>
-                <S.btnBor
-                  id="btnDelete" onClick={() => onDeleteButton()}
-                >
-                  <div>Удалить задачу</div>
-                </S.btnBor>
-              </div>
-              <S.btnBg01>
-                <a href="#">Закрыть</a>
-              </S.btnBg01>
-            </S.popBrowseBtnEdit>
           </S.popBrowseContent>
         </S.popBrowseBlock>
       </S.popBrowseContainer>
