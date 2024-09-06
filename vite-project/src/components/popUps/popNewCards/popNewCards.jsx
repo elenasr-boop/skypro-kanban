@@ -158,7 +158,7 @@ const PopNewCard = () => {
               </S.CategoriesThemes>
             </S.Categories>
             {isError && (
-              <S.Error>Ошибка в загрузке, попробуйте снова. </S.Error>
+              <S.Error>{todo.title.trim() === "" && todo.description.trim() === "" ? 'Введите название или описание задачи' : 'Ошибка в загрузке, попробуйте снова.' }</S.Error>
             )}
             <S.FormCreate
               onClick={() => {
