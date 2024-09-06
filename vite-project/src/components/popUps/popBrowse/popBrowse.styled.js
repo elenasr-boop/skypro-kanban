@@ -330,3 +330,8 @@ export const StatusTheme = styled.button`
     letter-spacing: -0.14px;
   }
 `;
+
+export const Error = styled.p`
+  color: red;
+  padding-bottom: 10px;
+`;

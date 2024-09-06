@@ -11,6 +11,7 @@ const PopBrowse = ({ id }) => {
   const { user } = useContext(UserContext);
   const { cards, setcards } = useContext(CardContext);
   const [isRedacting, setIsRedacting] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const card = cards.filter((card) => {
     return card._id === id;
@@ -48,6 +49,8 @@ const PopBrowse = ({ id }) => {
       setcards(result.tasks);
       navigate("/");
     } catch (_) {
+      setIsError(true);
+      setTimeout(() => setIsError(false), 1500);
       console.log("Error");
     }
   }
@@ -74,7 +77,9 @@ const PopBrowse = ({ id }) => {
       setIsRedacting(false);
       navigate("/");
     } catch (e) {
-      console.log(e);
+      setIsError(true);
+      setTimeout(() => setIsError(false), 1500);
+      console.log("error");
     }
   }
 
@@ -165,6 +170,9 @@ const PopBrowse = ({ id }) => {
                 <p className={bgcolor}>{card.topic}</p>
               </div>
             </div>
+            {isError && (
+              <S.Error>Ошибка в загрузке, попробуйте снова позже</S.Error>
+            )}
             <S.popBrowseBtnBrowse>
               <div>
                 {isRedacting ? (
