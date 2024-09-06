@@ -10,13 +10,16 @@ import {
   RegisterText,
   ErrorMessage,
 } from "../authorization/authorization.styled";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { register } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import { deleteSpaces, safeString } from "../../helpers";
 
-export function Register({ loginFunc }) {
-  const [error, setError] = useState("");
+export function Register() {
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const {loginUser} = useContext(UserContext);
 
   const [registerData, setRegisterData] = useState({
     login: "",
@@ -31,37 +34,43 @@ export function Register({ loginFunc }) {
       ...registerData,
       [name]: value,
     });
-
-    setError("");
+    setError(null);
   };
 
   async function clickOnButton() {
     if (
-      registerData.login === "" ||
-      registerData.name === "" ||
-      registerData.password === ""
+      deleteSpaces( {str: registerData.login} )  === "" ||
+      deleteSpaces( {str: registerData.name} ) === "" ||
+      deleteSpaces( {str: registerData.password} ) === ""
     ) {
-      setError(
-        "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку."
-      );
-    } else {
-      const result = await register({
-        login: registerData.login,
-        name: registerData.name,
-        password: registerData.password,
+      setError({text: "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.", 
+        login: deleteSpaces( {str: registerData.login} )  === "",
+        name: registerData.name.trim()  === "",
+        password: deleteSpaces( {str: registerData.password} )  === "",
       });
-
-      if (result === 201) {
-        loginFunc();
+    } else {
+      try {
+        setError(null);
+        const result = await register({
+          login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
+          name: registerData.name.trim(),
+          password: safeString({str: deleteSpaces( {str: registerData.password} )}),
+        });
+        if ('error' in result) {
+          throw new Error(result.error);
+        }
+        loginUser(result.user);
         navigate("/");
-        setError("");
-      } else if (result === 400) {
-        setError(
-          "Вы ввели почту, которая уже использовалась для регистрации. Попробуйте другую почту."
-        );
+      } catch (e) {
+        let text = '';
+        if (e.message === "Failed to fetch") {
+          text = "Проверьте подключение к интернету или попробуйте позже";
+        } else {
+          text = e.message;
+        }
+        setError({text: text});
       }
     }
-    // setError("Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.");
   }
 
   return (
@@ -76,7 +85,7 @@ export function Register({ loginFunc }) {
               onChange={handleInputChange}
               name="name"
               label="Имя"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('name' in error ? error.name : error.name) }
             />
             <LoginInput
               placeholder="Эл. почта"
@@ -84,7 +93,7 @@ export function Register({ loginFunc }) {
               onChange={handleInputChange}
               name="login"
               label="Логин"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('login' in error ? error.login : error.login)}
               type="email"
             />
             <LoginInput
@@ -94,15 +103,15 @@ export function Register({ loginFunc }) {
               name="password"
               label="Пароль"
               type="password"
-              $isError={error === "" ? false : true}
+              $isError={error !== null && ('password' in error ? error.password : error.password)}
             />
           </LoginInputs>
-          {error !== "" ? <ErrorMessage>{error}</ErrorMessage> : <></>}
+          {error !== null ? <ErrorMessage>{error.text}</ErrorMessage> : <></>}
           <LoginButton
             onClick={() => {
               clickOnButton();
             }}
-            disabled={error === "" ? false : true}
+            disabled={error !== null}
           >
             Зарегистрироваться
           </LoginButton>

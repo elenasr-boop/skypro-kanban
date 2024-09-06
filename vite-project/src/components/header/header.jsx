@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as S from "./header.styled.js";
 import { Container } from "../main/main.styled.js";
 import { ExitButton, ExitButtonA, SetTheme, SetThemeInput, SetThemeP, UserSetMail, UserSetName } from "./popUser.styled.js";
-import { userMail, userName } from "../../api.js";
+import { UserContext } from "../../context/userContext.jsx";
 
-const Header = ( {onCardAdd}) => {
+const Header = () => {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const toggleDropdown = () => setIsUserOpen((prevState) => !prevState);
+  const {user} = useContext(UserContext);
 
   return (
     <S.Header>
@@ -23,15 +24,15 @@ const Header = ( {onCardAdd}) => {
             </a>
           </div>
           <S.HeaderNav>
-            <S.HeaderBtnMainNew id="btnMainNew" onClick={onCardAdd}>
-              <S.HeaderBtnMainNewA href="#">Создать новую задачу</S.HeaderBtnMainNewA>
+            <S.HeaderBtnMainNew id="btnMainNew">
+              <S.HeaderBtnMainNewA to="/create">Создать новую задачу</S.HeaderBtnMainNewA>
             </S.HeaderBtnMainNew>
             <S.HeaderUser onClick={toggleDropdown}>
-              {userName}
+              {user.name}
             </S.HeaderUser>
             {isUserOpen && (<S.HeaderPopUserSet>
-              <UserSetName>{userName}</UserSetName>
-              <UserSetMail>{userMail}</UserSetMail>
+              <UserSetName>{user.name}</UserSetName>
+              <UserSetMail>{user.login}</UserSetMail>
               <SetTheme>
                 <SetThemeP>Темная тема</SetThemeP>
                 <SetThemeInput type="checkbox" name="checkbox" />

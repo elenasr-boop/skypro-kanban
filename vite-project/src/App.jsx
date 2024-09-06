@@ -7,30 +7,37 @@ import { Exit } from "./pages/Logout";
 import { Registration } from "./pages/registration";
 import { CardId } from "./pages/cardPage";
 import PrivateRoute from "./components/privateRoute";
-import { useState } from "react";
-import { isAuthening } from "./api.js";
+import { UserProvider } from "./context/userContext.jsx";
+import PopNewCard from "./components/popUps/popNewCards/popNewCards";
+import { CardProvider } from "./context/cardContext.jsx";
 
 function App() {
-  let [isAuth, setIsAuth] = useState(isAuthening);
-
-  function changeAuth () {
-    setIsAuth(!isAuth);
-  }
-
-  const [cards, setCards] = useState([]);
-
   return (
-      <Routes>
-        <Route element={<PrivateRoute isAuth={isAuth}/>}>
-        <Route path="/" element={<MainPage cards={cards} setCards={setCards}/>}>
-          <Route path="card/:id" element={<CardId cards={cards}/>} />
-          <Route path="exit" element={<Exit exitFunc={changeAuth}/>} />
-        </Route>
-        </Route>
-        <Route path="/login" element={<Login loginFunc={changeAuth}/>} />
-        <Route path="/registration" element={<Registration loginFunc={changeAuth}/>} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+    <UserProvider>
+      <CardProvider>
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route
+              path="/"
+              element={<MainPage />}
+            >
+              <Route
+                path="card/:id"
+                element={<CardId />}
+              />
+              <Route path="exit" element={<Exit />} />
+              <Route
+                path="create"
+                element={<PopNewCard />}
+              />
+            </Route>
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </CardProvider>
+    </UserProvider>
   );
 }
 

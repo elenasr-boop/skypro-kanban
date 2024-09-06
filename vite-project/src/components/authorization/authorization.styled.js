@@ -2,18 +2,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const LoginBlock = styled.div`
-  width: 100% - 16px;
-  height: vh;
   background-color: rgba(234, 238, 246, 1);
   display: flex;
   justify-content: center;
   padding-top: 185px;
   padding-bottom: 140px;
+  height: 100vh;
 `;
 
 export const MainBlock = styled.div`
   width: 368px;
-  height: auto;
+  height: 329px;
   background-color: rgba(255, 255, 255, 1);
   border: 0.7px rgba(212, 219, 229, 1);
   border-radius: 10px;
@@ -28,6 +27,7 @@ export const InnerBlock = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 20px;
 `;
 
@@ -113,6 +113,7 @@ export const RegisterLink = styled(Link)`
   line-height: 21px;
   letter-spacing: -0.01em;
   text-align: center;
+  text-decoration: underline;
   color: rgba(148, 166, 190, 0.4);
 `;
 

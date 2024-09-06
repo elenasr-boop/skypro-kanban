@@ -1,7 +1,11 @@
 import { Register } from "../components/registration/registration"
+import { GlobalStyle } from "../global.styled"
 
-export function Registration ( {loginFunc} ) {
+export function Registration () {
     return (
-        <Register loginFunc={loginFunc} />
+        <>
+            <GlobalStyle />
+            <Register />
+        </>
     )
 }

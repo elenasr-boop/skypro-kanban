@@ -1,7 +1,11 @@
 import { Authorization } from "../components/authorization/authorization.jsx"
+import { GlobalStyle } from "../global.styled.js"
 
-export function Login ( {loginFunc} ) {
+export function Login () {
     return (
-        <Authorization loginFunc={loginFunc}/>
+        <>
+            <GlobalStyle />
+            <Authorization />
+        </>
     )
 }
