@@ -18,6 +18,12 @@ const PopBrowse = ({ id }) => {
 
   const [selected, setSelected] = useState(new Date(card.date));
   const [description, setDescription] = useState(card.description);
+  const [status, setStatus] = useState(card.status);
+  const [oldVersion, setOldVersion] = useState({
+    date: new Date(card.date),
+    status: card.status,
+    description: card.description,
+  }); 
 
   let bgcolor = "";
   switch (card.topic) {
@@ -48,6 +54,18 @@ const PopBrowse = ({ id }) => {
 
   function saveButton() {
     console.log("Идет сохранение");
+    setOldVersion({
+      date: new Date(selected),
+      description: description,
+      status: status,
+    });
+    setIsRedacting(false);
+  }
+
+  function cancelButton () {
+    setDescription(oldVersion.description);
+    setSelected(oldVersion.date);
+    setStatus(oldVersion.status);
     setIsRedacting(false);
   }
 
@@ -65,8 +83,20 @@ const PopBrowse = ({ id }) => {
             <S.Status>
               <p>Статус</p>
               <S.StatusThemes>
-                <S.StatusTheme>
-                  <p>{card.status}</p>
+                <S.StatusTheme $active={status === "Без статуса"} $isRedacting={isRedacting} onClick={() => setStatus("Без статуса")}>
+                  <p>Без статуса</p>
+                </S.StatusTheme>
+                <S.StatusTheme $active={status === "Нужно сделать"} $isRedacting={isRedacting} onClick={() => setStatus("Нужно сделать")}>
+                  <p>Нужно сделать</p>
+                </S.StatusTheme>
+                <S.StatusTheme $active={status === "В работе"} $isRedacting={isRedacting} onClick={() => setStatus("В работе")}>
+                  <p>В работе</p>
+                </S.StatusTheme>
+                <S.StatusTheme $active={status === "Тестирование"} $isRedacting={isRedacting} onClick={() => setStatus("Тестирование")}>
+                  <p>Тестирование</p>
+                </S.StatusTheme>
+                <S.StatusTheme $active={status === "Готово"} $isRedacting={isRedacting} onClick={() => setStatus("Готово")}>
+                  <p>Готово</p>
                 </S.StatusTheme>
               </S.StatusThemes>
             </S.Status>
@@ -106,7 +136,7 @@ const PopBrowse = ({ id }) => {
                     <S.btnBor onClick={() => saveButton()}>
                       <p>Сохранить</p>
                     </S.btnBor>
-                    <S.btnBor onClick={() => setIsRedacting(false)}>
+                    <S.btnBor onClick={() => cancelButton()}>
                       <p>Отменить</p>
                     </S.btnBor>
                   </>
