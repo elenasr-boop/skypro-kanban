@@ -10,14 +10,14 @@ import { UserContext } from "../context/userContext.jsx";
 import { CardContext } from "../context/cardContext.jsx";
 
 export function MainPage() {
-  const {user} = useContext(UserContext);
-  const {setCards} = useContext(CardContext); 
-  
+  const { user } = useContext(UserContext);
+  const { setcards } = useContext(CardContext);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getTodos( {token: user.token} ).then((data) => {
-      setCards(data.tasks);
+    getTodos({ token: user.token }).then((data) => {
+      setcards(data.tasks);
       setIsLoading(false);
     });
   }, []);

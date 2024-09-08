@@ -53,7 +53,8 @@ export const LoginInput = styled.input`
   padding: 8px 10px 8px 10px;
   border-radius: 8px;
   border: 0.7px solid;
-  border-color: ${props => props.$isError ? 'rgba(248, 77, 77, 1)' : 'rgba(148, 166, 190, 0.4)'};
+  border-color: ${(props) =>
+    props.$isError ? "rgba(248, 77, 77, 1)" : "rgba(148, 166, 190, 0.4)"};
   font-family: Roboto;
   font-size: 14px;
   font-weight: 400;
@@ -77,7 +78,7 @@ export const LoginButton = styled.button`
   line-height: 21px;
   letter-spacing: -0.01em;
   text-align: center;
-  
+
   &:hover {
     cursor: pointer;
   }
@@ -118,12 +119,12 @@ export const RegisterLink = styled(Link)`
 `;
 
 export const ErrorMessage = styled.p`
-font-family: Arial;
-font-size: 12px;
-font-weight: 400;
-line-height: 18px;
-text-align: center;
-letter-spacing: -0.01em;
-text-align: center;
-color: rgba(248, 77, 77, 1);
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: rgba(248, 77, 77, 1);
 `;

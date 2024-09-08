@@ -311,21 +311,27 @@ export const StatusThemes = styled.div`
   justify-content: flex-start;
 `;
 
-export const StatusTheme = styled.div`
+export const StatusTheme = styled.button`
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: #fff;
-  background-color: rgba(148, 166, 190, 1);
+  color: ${({ $active }) => ($active ? "#fff" : "#94A6BE")};
+  background-color: ${({ $active }) => ($active ? "#94A6BE" : "#fff")};
   padding: 7px 14px;
   margin-right: 7px;
   margin-bottom: 7px;
-  width: 136px;
   height: 30px;
-  align-content: center;
+  text-align: center;
+  display: ${({ $isRedacting, $active }) =>
+    $isRedacting || $active ? "block" : "none"};
 
   p {
     font-size: 14px;
     line-height: 1;
     letter-spacing: -0.14px;
   }
+`;
+
+export const Error = styled.p`
+  color: red;
+  padding-bottom: 10px;
 `;

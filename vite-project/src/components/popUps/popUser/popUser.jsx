@@ -1,31 +1,38 @@
 import { Link } from "react-router-dom";
-import { PopExit } from "./popUser.styled";
+import {
+  ExitNo,
+  ExitYes,
+  PopExit,
+  PopExitBlock,
+  PopExitContainer,
+  PopExitFormGroup,
+  PopExitTtl,
+} from "./popUser.styled";
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 
-
 const PopUser = () => {
-  const {exitFunc} = useContext(UserContext);
+  const { exitFunc } = useContext(UserContext);
 
   return (
     <PopExit>
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
-            <h2>Выйти из аккаунта?</h2>
+      <PopExitContainer>
+        <PopExitBlock>
+          <div>
+            <PopExitTtl>Выйти из аккаунта?</PopExitTtl>
           </div>
-          <form className="pop-exit__form" id="formExit" action="#">
-            <div className="pop-exit__form-group">
-              <button className="pop-exit__exit-yes _hover01" id="exitYes" onClick={exitFunc}>
-                <Link to="/login" >Да, выйти</Link>
-              </button>
-              <button className="pop-exit__exit-no _hover03" id="exitNo">
+          <form id="formExit" action="#">
+            <PopExitFormGroup>
+              <ExitYes id="exitYes" onClick={exitFunc}>
+                <Link to="/login">Да, выйти</Link>
+              </ExitYes>
+              <ExitNo id="exitNo">
                 <Link to="/">Нет, остаться</Link>
-              </button>
-            </div>
+              </ExitNo>
+            </PopExitFormGroup>
           </form>
-          </div>
-      </div>
+        </PopExitBlock>
+      </PopExitContainer>
     </PopExit>
   );
 };

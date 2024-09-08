@@ -50,10 +50,12 @@ export function Authorization() {
       try {
         setError(null);
         const result = await auth({
-          login: safeString( {str: deleteSpaces({ str: authData.login })} ),
-          password: safeString( {str: deleteSpaces({ str: authData.password })} ),
+          login: safeString({ str: deleteSpaces({ str: authData.login }) }),
+          password: safeString({
+            str: deleteSpaces({ str: authData.password }),
+          }),
         });
-        if ('error' in result) {
+        if ("error" in result) {
           throw new Error(result.error);
         }
         loginUser(result.user);
@@ -65,7 +67,7 @@ export function Authorization() {
         } else {
           text = e.message;
         }
-        setError({text: text ,login: true, password: true});
+        setError({ text: text, login: true, password: true });
       }
     }
   }
@@ -94,13 +96,7 @@ export function Authorization() {
               $isError={error !== null && error.password}
             />
           </LoginInputs>
-          {error !== null ? (
-            <ErrorMessage>
-              {error.text}
-            </ErrorMessage>
-          ) : (
-            <></>
-          )}
+          {error !== null ? <ErrorMessage>{error.text}</ErrorMessage> : <></>}
           <LoginButton
             onClick={() => {
               clickOnButton();

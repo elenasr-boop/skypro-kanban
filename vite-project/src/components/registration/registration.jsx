@@ -19,7 +19,7 @@ import { deleteSpaces, safeString } from "../../helpers";
 export function Register() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const {loginUser} = useContext(UserContext);
+  const { loginUser } = useContext(UserContext);
 
   const [registerData, setRegisterData] = useState({
     login: "",
@@ -39,36 +39,39 @@ export function Register() {
 
   async function clickOnButton() {
     if (
-      deleteSpaces( {str: registerData.login} )  === "" ||
-      deleteSpaces( {str: registerData.name} ) === "" ||
-      deleteSpaces( {str: registerData.password} ) === ""
+      deleteSpaces({ str: registerData.login }) === "" ||
+      deleteSpaces({ str: registerData.name }) === "" ||
+      deleteSpaces({ str: registerData.password }) === ""
     ) {
-      setError({text: "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.", 
-        login: deleteSpaces( {str: registerData.login} )  === "",
-        name: registerData.name.trim()  === "",
-        password: deleteSpaces( {str: registerData.password} )  === "",
+      setError({
+        text: "Введенные вами данные не корректны. Чтобы завершить регистрацию, введите данные корректно и повторите попытку.",
+        login: deleteSpaces({ str: registerData.login }) === "",
+        name: registerData.name.trim() === "",
+        password: deleteSpaces({ str: registerData.password }) === "",
       });
     } else {
       try {
         setError(null);
         const result = await register({
-          login: safeString( {str: deleteSpaces( {str: registerData.login} )} ),
+          login: safeString({ str: deleteSpaces({ str: registerData.login }) }),
           name: registerData.name.trim(),
-          password: safeString({str: deleteSpaces( {str: registerData.password} )}),
+          password: safeString({
+            str: deleteSpaces({ str: registerData.password }),
+          }),
         });
-        if ('error' in result) {
+        if ("error" in result) {
           throw new Error(result.error);
         }
         loginUser(result.user);
         navigate("/");
       } catch (e) {
-        let text = '';
+        let text = "";
         if (e.message === "Failed to fetch") {
           text = "Проверьте подключение к интернету или попробуйте позже";
         } else {
           text = e.message;
         }
-        setError({text: text});
+        setError({ text: text });
       }
     }
   }
@@ -85,7 +88,9 @@ export function Register() {
               onChange={handleInputChange}
               name="name"
               label="Имя"
-              $isError={error !== null && ('name' in error ? error.name : error.name) }
+              $isError={
+                error !== null && ("name" in error ? error.name : error.name)
+              }
             />
             <LoginInput
               placeholder="Эл. почта"
@@ -93,7 +98,9 @@ export function Register() {
               onChange={handleInputChange}
               name="login"
               label="Логин"
-              $isError={error !== null && ('login' in error ? error.login : error.login)}
+              $isError={
+                error !== null && ("login" in error ? error.login : error.login)
+              }
               type="email"
             />
             <LoginInput
@@ -103,7 +110,10 @@ export function Register() {
               name="password"
               label="Пароль"
               type="password"
-              $isError={error !== null && ('password' in error ? error.password : error.password)}
+              $isError={
+                error !== null &&
+                ("password" in error ? error.password : error.password)
+              }
             />
           </LoginInputs>
           {error !== null ? <ErrorMessage>{error.text}</ErrorMessage> : <></>}

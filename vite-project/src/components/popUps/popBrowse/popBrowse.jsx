@@ -1,38 +1,91 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { deleteTodo } from "../../../api";
+import { deleteTodo, editTodo } from "../../../api";
 import { UserContext } from "../../../context/userContext";
 import { CardContext } from "../../../context/cardContext";
 import Calendar from "../../calendar/calendar";
-import * as S from "./popBrowse.styled.js"
+import * as S from "./popBrowse.styled.js";
 
 const PopBrowse = ({ id }) => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(false);
-  const {user} = useContext(UserContext);
-  const {cards, setCards} = useContext(CardContext);
+  const { user } = useContext(UserContext);
+  const { cards, setcards } = useContext(CardContext);
+  const [isRedacting, setIsRedacting] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const card = cards.filter((card) => {
     return card._id === id;
   })[0];
 
+  const [selected, setSelected] = useState(new Date(card.date));
+  const [description, setDescription] = useState(card.description);
+  const [status, setStatus] = useState(card.status);
+  const [oldVersion, setOldVersion] = useState({
+    date: new Date(card.date),
+    status: card.status,
+    description: card.description,
+  });
+
   let bgcolor = "";
   switch (card.topic) {
-    case "Web Design": bgcolor = "_orange"; break;
-    case "Research": bgcolor = "_green"; break;
-    case "Copywriting": bgcolor = "_purple"; break;
-    default: bgcolor = "_gray"; break;
+    case "Web Design":
+      bgcolor = "_orange";
+      break;
+    case "Research":
+      bgcolor = "_green";
+      break;
+    case "Copywriting":
+      bgcolor = "_purple";
+      break;
+    default:
+      bgcolor = "_gray";
+      break;
   }
 
-  async function onDeleteButton () {
+  async function onDeleteButton() {
     try {
-      const result = await deleteTodo ({id: id, token: user.token});
+      const result = await deleteTodo({ id: id, token: user.token });
 
-      setCards(result.tasks)
+      setcards(result.tasks);
       navigate("/");
     } catch (_) {
-      console.log('Error');
+      setIsError(true);
+      setTimeout(() => setIsError(false), 1500);
     }
+  }
+
+  async function saveButton() {
+    try {
+      const result = await editTodo({
+        id: id,
+        token: user.token,
+        title: card.title,
+        topic: card.topic,
+        status: status,
+        description: description,
+        date: selected,
+      });
+
+      setcards(result.tasks);
+
+      setOldVersion({
+        date: new Date(selected),
+        description: description,
+        status: status,
+      });
+      setIsRedacting(false);
+      navigate("/");
+    } catch (e) {
+      setIsError(true);
+      setTimeout(() => setIsError(false), 1500);
+    }
+  }
+
+  function cancelButton() {
+    setDescription(oldVersion.description);
+    setSelected(oldVersion.date);
+    setStatus(oldVersion.status);
+    setIsRedacting(false);
   }
 
   return (
@@ -49,30 +102,65 @@ const PopBrowse = ({ id }) => {
             <S.Status>
               <p>Статус</p>
               <S.StatusThemes>
-                <S.StatusTheme>
-                  <p>{card.status}</p>
+                <S.StatusTheme
+                  $active={status === "Без статуса"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Без статуса")}
+                >
+                  <p>Без статуса</p>
+                </S.StatusTheme>
+                <S.StatusTheme
+                  $active={status === "Нужно сделать"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Нужно сделать")}
+                >
+                  <p>Нужно сделать</p>
+                </S.StatusTheme>
+                <S.StatusTheme
+                  $active={status === "В работе"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("В работе")}
+                >
+                  <p>В работе</p>
+                </S.StatusTheme>
+                <S.StatusTheme
+                  $active={status === "Тестирование"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Тестирование")}
+                >
+                  <p>Тестирование</p>
+                </S.StatusTheme>
+                <S.StatusTheme
+                  $active={status === "Готово"}
+                  $isRedacting={isRedacting}
+                  onClick={() => setStatus("Готово")}
+                >
+                  <p>Готово</p>
                 </S.StatusTheme>
               </S.StatusThemes>
             </S.Status>
             <S.popBrowseWrap>
-              <S.popBrowseForm
-                id="formBrowseCard"
-                action="#"
-              >
+              <S.popBrowseForm id="formBrowseCard" action="#">
                 <S.formBrowseBlock>
                   <label htmlFor="textArea01" className="subttl">
                     Описание задачи
                   </label>
                   <S.formBrowseArea
-                    name="text"
+                    name="description"
                     id="textArea01"
-                    readOnly
-                    value={card.description}
+                    label="Описание"
+                    value={description}
+                    disabled={!isRedacting}
+                    onChange={(e) => setDescription(e.target.value)}
                     placeholder="Введите описание задачи..."
                   />
                 </S.formBrowseBlock>
               </S.popBrowseForm>
-              <Calendar selected={selected} setSelected={setSelected} size="1.75" />
+              <Calendar
+                selected={selected}
+                setSelected={isRedacting ? setSelected : undefined}
+                size="1.75"
+              />
             </S.popBrowseWrap>
             <div className="theme-down__categories theme-down">
               <p className="categories__p subttl">Категория</p>
@@ -80,11 +168,25 @@ const PopBrowse = ({ id }) => {
                 <p className={bgcolor}>{card.topic}</p>
               </div>
             </div>
+            {isError && (
+              <S.Error>Ошибка в загрузке, попробуйте снова позже</S.Error>
+            )}
             <S.popBrowseBtnBrowse>
               <div>
-                <S.btnBor>
-                  <a href="#">Редактировать задачу</a>
-                </S.btnBor>
+                {isRedacting ? (
+                  <>
+                    <S.btnBor onClick={() => saveButton()}>
+                      <p>Сохранить</p>
+                    </S.btnBor>
+                    <S.btnBor onClick={() => cancelButton()}>
+                      <p>Отменить</p>
+                    </S.btnBor>
+                  </>
+                ) : (
+                  <S.btnBor onClick={() => setIsRedacting(true)}>
+                    <p>Редактировать задачу</p>
+                  </S.btnBor>
+                )}
                 <S.btnBor onClick={() => onDeleteButton()}>
                   <div>Удалить задачу</div>
                 </S.btnBor>
@@ -93,24 +195,6 @@ const PopBrowse = ({ id }) => {
                 <Link to="/">Закрыть</Link>
               </S.btnBg01>
             </S.popBrowseBtnBrowse>
-            <S.popBrowseBtnEdit>
-              <div>
-                <S.btnBg01>
-                  <a href="#">Сохранить</a>
-                </S.btnBg01>
-                <S.btnBg03>
-                  <a href="#">Отменить</a>
-                </S.btnBg03>
-                <S.btnBor
-                  id="btnDelete" onClick={() => onDeleteButton()}
-                >
-                  <div>Удалить задачу</div>
-                </S.btnBor>
-              </div>
-              <S.btnBg01>
-                <a href="#">Закрыть</a>
-              </S.btnBg01>
-            </S.popBrowseBtnEdit>
           </S.popBrowseContent>
         </S.popBrowseBlock>
       </S.popBrowseContainer>
